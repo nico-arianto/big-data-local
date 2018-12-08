@@ -20,6 +20,12 @@ function setupPassphraselessSSH() {
 
 function configureHadoop() {
     HADOOP_CONFIG=$HADOOP_HOME/etc/hadoop/
+    if [ ! -e $HADOOP_CONFIG/hadoop-env.sh.backup ]; then
+        echo "Backup the hadoop-env.sh to hadoop-env.sh.backup"
+        cp $HADOOP_CONFIG/hadoop-env.sh $HADOOP_CONFIG/hadoop-env.sh.backup
+        echo "Set JAVA_HOME to JDK 1.8 in hadoop-env.sh"
+        sed -i '' -e 's|# export JAVA_HOME=|export JAVA_HOME='"$JAVA_HOME"'|g' $DIR/hadoop/hadoop-env.sh
+    fi
     if [ ! -e $HADOOP_CONFIG/core-site.xml.backup ]; then
         echo "Backup the core-site.xml to core-site.xml.backup"
         cp $HADOOP_CONFIG/core-site.xml $HADOOP_CONFIG/core-site.xml.backup
@@ -36,6 +42,8 @@ function configureHadoop() {
         echo "Backup the yarn-site.xml to yarn-site.xml.backup"
         cp $HADOOP_CONFIG/yarn-site.xml $HADOOP_CONFIG/yarn-site.xml.backup
     fi
+    echo "Override the core-site.xml"
+    cp $DIR/hadoop/hadoop-env.sh $HADOOP_CONFIG/hadoop-env.sh
     echo "Override the core-site.xml"
     cp $DIR/hadoop/core-site.xml $HADOOP_CONFIG/core-site.xml
     echo "Override the hdfs-site.xml"

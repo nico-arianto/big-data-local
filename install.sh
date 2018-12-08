@@ -9,13 +9,13 @@ function checkBrew() {
 
 function installOrUpgrade() {
     formula=$1
-    if brew ls --versions $formula > /dev/null; then
+    if brew $2 ls --versions $formula > /dev/null; then
         echo "Trying to upgrade $1"
-        brew upgrade $formula
+        brew $2 upgrade $formula
     else
         echo "Trying to install $1"
-        brew install $formula
-    fi    
+        brew $2 install $formula
+    fi
 }
 
 function installOrUpgradeHadoop() {
@@ -27,6 +27,7 @@ function installOrUpgradeHadoop() {
 
 brew update
 
+installOrUpgrade java8 cask
 installOrUpgradeHadoop
 installOrUpgrade hive
 installOrUpgrade apache-spark
