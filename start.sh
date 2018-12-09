@@ -17,6 +17,18 @@ function startHadoop() {
     start-yarn.sh
 }
 
+function startHive() {
+    echo "Make the HDFS directories before can create a table in Hive"
+    hadoop fs -mkdir /tmp
+    hadoop fs -mkdir /user/hive/warehouse
+    hadoop fs -chmod g+w /tmp
+    hadoop fs -chmod g+w /user/hive/warehouse
+    # schematool -dbType derby -validate
+    # if [ "$?" = "0" ]; then
+    #     schematool -dbType derby -initSchema
+    # fi
+}
+
 USER="$(id -u -n)"
 
 checkJava

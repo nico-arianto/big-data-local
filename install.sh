@@ -25,9 +25,15 @@ function installOrUpgradeHadoop() {
     installOrUpgrade pdsh
 }
 
+function installOrUpgradeHive() {
+    installOrUpgrade hive
+    echo "Installing required softwares for hive"
+    installOrUpgrade derby
+}
+
 brew update
 
 installOrUpgrade java8 cask
 installOrUpgradeHadoop
-installOrUpgrade hive
+installOrUpgradeHive
 installOrUpgrade apache-spark

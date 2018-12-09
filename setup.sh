@@ -19,39 +19,43 @@ function setupPassphraselessSSH() {
 }
 
 function configureHadoop() {
-    HADOOP_CONFIG=$HADOOP_HOME/etc/hadoop/
-    if [ ! -e $HADOOP_CONFIG/hadoop-env.sh.backup ]; then
+    if [ ! -e $HADOOP_CONF_DIR/hadoop-env.sh.backup ]; then
         echo "Backup the hadoop-env.sh to hadoop-env.sh.backup"
-        cp $HADOOP_CONFIG/hadoop-env.sh $HADOOP_CONFIG/hadoop-env.sh.backup
+        cp $HADOOP_CONF_DIR/hadoop-env.sh $HADOOP_CONF_DIR/hadoop-env.sh.backup
         echo "Set JAVA_HOME to JDK 1.8 in hadoop-env.sh"
         sed -i '' -e 's|# export JAVA_HOME=|export JAVA_HOME='"$JAVA_HOME"'|g' $DIR/hadoop/hadoop-env.sh
     fi
-    if [ ! -e $HADOOP_CONFIG/core-site.xml.backup ]; then
+    if [ ! -e $HADOOP_CONF_DIR/core-site.xml.backup ]; then
         echo "Backup the core-site.xml to core-site.xml.backup"
-        cp $HADOOP_CONFIG/core-site.xml $HADOOP_CONFIG/core-site.xml.backup
+        cp $HADOOP_CONF_DIR/core-site.xml $HADOOP_CONF_DIR/core-site.xml.backup
     fi
-    if [ ! -e $HADOOP_CONFIG/hdfs-site.xml.backup ]; then
+    if [ ! -e $HADOOP_CONF_DIR/hdfs-site.xml.backup ]; then
         echo "Backup the hdfs-site.xml to hdfs-site.xml.backup"
-        cp $HADOOP_CONFIG/hdfs-site.xml $HADOOP_CONFIG/hdfs-site.xml.backup
+        cp $HADOOP_CONF_DIR/hdfs-site.xml $HADOOP_CONF_DIR/hdfs-site.xml.backup
     fi
-    if [ ! -e $HADOOP_CONFIG/mapred-site.xml.backup ]; then
+    if [ ! -e $HADOOP_CONF_DIR/mapred-site.xml.backup ]; then
         echo "Backup the mapred-site.xml to mapred-site.xml.backup"
-        cp $HADOOP_CONFIG/mapred-site.xml $HADOOP_CONFIG/mapred-site.xml.backup
+        cp $HADOOP_CONF_DIR/mapred-site.xml $HADOOP_CONF_DIR/mapred-site.xml.backup
     fi
-    if [ ! -e $HADOOP_CONFIG/yarn-site.xml.backup ]; then
+    if [ ! -e $HADOOP_CONF_DIR/yarn-site.xml.backup ]; then
         echo "Backup the yarn-site.xml to yarn-site.xml.backup"
-        cp $HADOOP_CONFIG/yarn-site.xml $HADOOP_CONFIG/yarn-site.xml.backup
+        cp $HADOOP_CONF_DIR/yarn-site.xml $HADOOP_CONF_DIR/yarn-site.xml.backup
     fi
     echo "Override the core-site.xml"
-    cp $DIR/hadoop/hadoop-env.sh $HADOOP_CONFIG/hadoop-env.sh
+    cp $DIR/hadoop/hadoop-env.sh $HADOOP_CONF_DIR/hadoop-env.sh
     echo "Override the core-site.xml"
-    cp $DIR/hadoop/core-site.xml $HADOOP_CONFIG/core-site.xml
+    cp $DIR/hadoop/core-site.xml $HADOOP_CONF_DIR/core-site.xml
     echo "Override the hdfs-site.xml"
-    cp $DIR/hadoop/hdfs-site.xml $HADOOP_CONFIG/hdfs-site.xml
+    cp $DIR/hadoop/hdfs-site.xml $HADOOP_CONF_DIR/hdfs-site.xml
     echo "Override the mapred-site.xml"
-    cp $DIR/hadoop/mapred-site.xml $HADOOP_CONFIG/mapred-site.xml
+    cp $DIR/hadoop/mapred-site.xml $HADOOP_CONF_DIR/mapred-site.xml
     echo "Override the yarn-site.xml"
-    cp $DIR/hadoop/yarn-site.xml $HADOOP_CONFIG/yarn-site.xml
+    cp $DIR/hadoop/yarn-site.xml $HADOOP_CONF_DIR/yarn-site.xml
+}
+
+function configureHive() {
+    echo "Override the core-site.xml"
+    cp $DIR/hive/hive-env.sh $HIVE_CONF_DIR/hive-env.sh
 }
 
 DIR="${0%/*}"
