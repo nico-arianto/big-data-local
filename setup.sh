@@ -22,8 +22,6 @@ function configureHadoop() {
     if [ ! -e $HADOOP_CONF_DIR/hadoop-env.sh.backup ]; then
         echo "Backup the hadoop-env.sh to hadoop-env.sh.backup"
         cp $HADOOP_CONF_DIR/hadoop-env.sh $HADOOP_CONF_DIR/hadoop-env.sh.backup
-        echo "Set JAVA_HOME to JDK 1.8 in hadoop-env.sh"
-        sed -i '' -e 's|# export JAVA_HOME=|export JAVA_HOME='"$JAVA_HOME"'|g' $DIR/hadoop/hadoop-env.sh
     fi
     if [ ! -e $HADOOP_CONF_DIR/core-site.xml.backup ]; then
         echo "Backup the core-site.xml to core-site.xml.backup"
@@ -41,8 +39,11 @@ function configureHadoop() {
         echo "Backup the yarn-site.xml to yarn-site.xml.backup"
         cp $HADOOP_CONF_DIR/yarn-site.xml $HADOOP_CONF_DIR/yarn-site.xml.backup
     fi
-    echo "Override the core-site.xml"
+    echo "Override the hadoop-env.sh"
+    sed -i '.backup' -e 's|# export JAVA_HOME=|export JAVA_HOME='"$JAVA_HOME"'|g' $DIR/hadoop/hadoop-env.sh
     cp $DIR/hadoop/hadoop-env.sh $HADOOP_CONF_DIR/hadoop-env.sh
+    rm $DIR/hadoop/hadoop-env.sh
+    mv $DIR/hadoop/hadoop-env.sh.backup $DIR/hadoop/hadoop-env.sh
     echo "Override the core-site.xml"
     cp $DIR/hadoop/core-site.xml $HADOOP_CONF_DIR/core-site.xml
     echo "Override the hdfs-site.xml"
@@ -54,8 +55,10 @@ function configureHadoop() {
 }
 
 function configureHive() {
-    echo "Override the core-site.xml"
+    echo "Override the hive-env.sh"
     cp $DIR/hive/hive-env.sh $HIVE_CONF_DIR/hive-env.sh
+    echo "Override the hive-site.xml"
+    cp $DIR/hive/hive-site.xml $HIVE_CONF_DIR/hive-site.xml
 }
 
 DIR="${0%/*}"
@@ -65,3 +68,4 @@ source $DIR/environment.sh
 enableRemoteLogin
 setupPassphraselessSSH
 configureHadoop
+configureHive

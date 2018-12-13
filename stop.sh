@@ -5,4 +5,9 @@ function stopHadoop() {
     stop-dfs.sh
 }
 
+function stopHive() {
+    brew services stop derby
+}
+
 stopHadoop
+stopHive
