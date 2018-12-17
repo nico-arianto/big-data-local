@@ -37,3 +37,5 @@ installOrUpgrade java8 cask
 installOrUpgradeHadoop
 installOrUpgradeHive
 installOrUpgrade apache-spark
+echo "Installing utilities softwares"
+installOrUpgrade coreutils
