@@ -26,6 +26,9 @@ function startHive() {
         echo "Try Schema initialization"
         schematool -dbType derby -initSchema
     fi
+    echo "Start HiveServer2"
+    mkdir -p /tmp/hive2/
+    nohup hiveserver2 > /tmp/hive2/err.log 2> /tmp/hive2/out.log & echo $! > /tmp/hive2/pid
 }
 
 DIR="${0%/*}"

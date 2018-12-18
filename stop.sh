@@ -6,8 +6,9 @@ function stopHadoop() {
 }
 
 function stopHive() {
+    kill $(cat /tmp/hive2/pid)
     brew services stop derby
 }
 
-stopHadoop
 stopHive
+stopHadoop
