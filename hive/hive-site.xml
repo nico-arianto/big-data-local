@@ -33,4 +33,12 @@
     <value>org.apache.derby.jdbc.ClientDriver</value>
     <description>Driver class name for a JDBC metastore</description>
   </property>
+  <property>
+    <name>hive.server2.enable.doAs</name>
+    <value>false</value>
+    <description>
+      Setting this property to true will have HiveServer2 execute
+      Hive operations as the user making the calls to it.
+    </description>
+  </property>
 </configuration>
