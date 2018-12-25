@@ -18,7 +18,7 @@ function startHive() {
     hadoop fs -chmod g+w /user/hive/warehouse
     echo "Start Derby server"
     brew services start derby
-    echo "Waiting for Derby server to start"
+    echo "Waiting for Derby service to start"
     gtimeout 60 sh -c 'until nc -z $0 $1; do printf "." && sleep 1; done;' localhost 1527
     echo "Try Schema upgrade"
     schematool -dbType derby -upgradeSchema
@@ -29,6 +29,8 @@ function startHive() {
     echo "Start HiveServer2"
     mkdir -p /tmp/hive2/
     nohup hiveserver2 > /tmp/hive2/err.log 2> /tmp/hive2/out.log & echo $! > /tmp/hive2/pid
+    echo "Waiting for HiveServer2 service to start"
+    gtimeout 600 sh -c 'until nc -z $0 $1; do printf "." && sleep 1; done;' localhost 10000
 }
 
 DIR="${0%/*}"

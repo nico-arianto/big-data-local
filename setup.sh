@@ -61,6 +61,15 @@ function configureHive() {
     cp $DIR/hive/hive-site.xml $HIVE_CONF_DIR/hive-site.xml
 }
 
+function configureSpark() {
+    echo "Override the hdfs-site.xml"
+    cp $HADOOP_CONF_DIR/hdfs-site.xml $SPARK_CONF_DIR/hdfs-site.xml
+    echo "Override the hive-site.xml"
+    cp $HIVE_CONF_DIR/hive-site.xml $SPARK_CONF_DIR/hive-site.xml
+    echo "Override the spark-defaults.conf"
+    cp $DIR/spark/spark-defaults.conf $SPARK_CONF_DIR/spark-defaults.conf
+}
+
 DIR="${0%/*}"
 
 source $DIR/environment.sh
@@ -69,3 +78,4 @@ enableRemoteLogin
 setupPassphraselessSSH
 configureHadoop
 configureHive
+configureSpark
