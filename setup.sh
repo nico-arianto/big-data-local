@@ -70,6 +70,11 @@ function configureSpark() {
     cp $DIR/spark/spark-defaults.conf $SPARK_CONF_DIR/spark-defaults.conf
 }
 
+function configureAlluxio() {
+    echo "Override the alluxio-site.properties"
+    cp $DIR/alluxio/alluxio-site.properties $ALLUXIO_HOME/conf/alluxio-site.properties
+}
+
 DIR="${0%/*}"
 
 source $DIR/environment.sh
@@ -79,3 +84,4 @@ setupPassphraselessSSH
 configureHadoop
 configureHive
 configureSpark
+configureAlluxio

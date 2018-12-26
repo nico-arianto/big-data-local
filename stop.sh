@@ -5,10 +5,17 @@ function stopHadoop() {
     stop-dfs.sh
 }
 
+function stopAlluxio() {
+    echo "Stop all Alluxio processes locally"
+    alluxio-stop.sh local
+}
+
 function stopHive() {
+    echo "Stop HiveServer2"
     kill $(cat /tmp/hive2/pid)
     brew services stop derby
 }
 
 stopHive
+stopAlluxio
 stopHadoop

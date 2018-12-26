@@ -37,5 +37,6 @@ installOrUpgrade java8 cask
 installOrUpgradeHadoop
 installOrUpgradeHive
 installOrUpgrade apache-spark
+installOrUpgrade alluxio
 echo "Installing utilities softwares"
 installOrUpgrade coreutils

@@ -8,3 +8,4 @@ export HIVE_CONF_DIR=$HIVE_HOME/conf
 # find-spark-home
 export SPARK_HOME=/usr/local/opt/apache-spark/libexec
 export SPARK_CONF_DIR=$SPARK_HOME/conf
+export ALLUXIO_HOME=/usr/local/opt/alluxio/libexec

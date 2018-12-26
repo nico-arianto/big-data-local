@@ -9,6 +9,13 @@ function startHadoop() {
     start-yarn.sh
 }
 
+function startAlluxio() {
+    echo "Format Alluxio master and all workers"
+    alluxio format
+    echo "Start all masters, proxies, and workers"
+    alluxio-start.sh local SudoMount
+}
+
 function startHive() {
     echo "Make the HDFS directories before can create a table in Hive"
     # init-hive-dfs.sh
@@ -39,4 +46,5 @@ USER="$(id -u -n)"
 source $DIR/environment.sh
 
 startHadoop
+startAlluxio
 startHive
