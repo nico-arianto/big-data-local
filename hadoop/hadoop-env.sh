@@ -136,7 +136,7 @@ esac
 # Similarly, end users should utilize ${HOME}/.hadooprc .
 # This variable should ideally only be used as a short-cut,
 # interactive way for temporary additions on the command line.
-# export HADOOP_CLASSPATH="/some/cool/path/on/your/machine"
+export HADOOP_CLASSPATH="/usr/local/opt/alluxio/libexec/client/alluxio-1.8.1-client.jar:${HADOOP_CLASSPATH}"
 
 # Should HADOOP_CLASSPATH be first in the official CLASSPATH?
 # export HADOOP_USER_CLASSPATH_FIRST="yes"

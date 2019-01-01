@@ -14,3 +14,9 @@ Big Data Automation in Local MacOS
 * Alluxio: https://www.alluxio.org/docs/1.8/en/Getting-Started.html
 * Derby: https://db.apache.org/derby/docs/10.14/getstart/
 * Coreutils: https://www.gnu.org/software/coreutils/
+
+# Tested with
+* hadoop 3.1.1
+* hive 3.1.1
+* apache-spark 2.4.0
+* alluxio 1.8.1
