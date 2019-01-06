@@ -37,7 +37,7 @@ function startHive() {
     mkdir -p /tmp/hive2/
     nohup hiveserver2 > /tmp/hive2/err.log 2> /tmp/hive2/out.log & echo $! > /tmp/hive2/pid
     echo "Waiting for HiveServer2 service to start"
-    gtimeout 600 sh -c 'until nc -z $0 $1; do printf "." && sleep 1; done;' localhost 10000
+    gtimeout 120 sh -c 'until nc -z $0 $1; do printf "." && sleep 1; done;' localhost 10000
 }
 
 DIR="${0%/*}"
