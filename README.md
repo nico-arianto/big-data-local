@@ -7,6 +7,28 @@ Big Data Automation in Local MacOS
 * Alluxio master: http://localhost:19999
 * Alluxio worker: http://localhost:30000
 
+# How to install
+Install the Big Data components via Homebrew
+```shell
+$ ./install.sh
+```
+
+# How to setup
+Override the Big Data components configuration files
+```shell
+$ ./setup.sh
+```
+
+# How to start
+```shell
+$ ./start.sh
+```
+
+# How to stop
+```shell
+$ ./stop.sh
+```
+
 # References
 * Homebrew: https://brew.sh/
 * Hadoop: https://hadoop.apache.org/docs/current3/
