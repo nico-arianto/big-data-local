@@ -17,6 +17,7 @@ function stopHive() {
 }
 
 function stopHbase() {
+    # brew services stop hbase
     stop-hbase.sh
 }
 

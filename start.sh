@@ -41,6 +41,7 @@ function startHive() {
 }
 
 function startHbase() {
+    # brew services start hbase
     start-hbase.sh
 }
 

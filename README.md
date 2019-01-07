@@ -6,6 +6,7 @@ Big Data Automation in Local MacOS
 * ResourceManager: http://localhost:8088/
 * Alluxio master: http://localhost:19999
 * Alluxio worker: http://localhost:30000
+* HBase HMaster: http://localhost:16010/
 
 # How to install
 Install the Big Data components via Homebrew
@@ -34,6 +35,7 @@ $ ./stop.sh
 * Hadoop: https://hadoop.apache.org/docs/current3/
 * Hive: https://cwiki.apache.org/confluence/display/Hive/Home
 * Alluxio: https://www.alluxio.org/docs/1.8/en/Getting-Started.html
+* HBase: http://hbase.apache.org/book.html#quickstart
 * Derby: https://db.apache.org/derby/docs/10.14/getstart/
 * Coreutils: https://www.gnu.org/software/coreutils/
 
@@ -42,3 +44,4 @@ $ ./stop.sh
 * hive 3.1.1
 * apache-spark 2.4.0
 * alluxio 1.8.1
+* hbase 1.2.8
