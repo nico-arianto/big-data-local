@@ -16,6 +16,11 @@ function stopHive() {
     brew services stop derby
 }
 
+function stopHbase() {
+    stop-hbase.sh
+}
+
+stopHbase
 stopHive
 stopAlluxio
 stopHadoop

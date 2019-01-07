@@ -40,6 +40,10 @@ function startHive() {
     gtimeout 120 sh -c 'until nc -z $0 $1; do printf "." && sleep 1; done;' localhost 10000
 }
 
+function startHbase() {
+    start-hbase.sh
+}
+
 DIR="${0%/*}"
 USER="$(id -u -n)"
 
@@ -48,3 +52,4 @@ source $DIR/environment.sh
 startHadoop
 startAlluxio
 startHive
+startHbase
