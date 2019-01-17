@@ -75,6 +75,15 @@ function configureAlluxio() {
     cp $DIR/alluxio/alluxio-site.properties $ALLUXIO_HOME/conf/alluxio-site.properties
 }
 
+function configureHbase() {
+    if [ ! -e $HBASE_CONF_DIR/hbase-site.xml.backup ]; then
+        echo "Backup the hbase-site.xml to hbase-site.xml.backup"
+        cp $HBASE_CONF_DIR/hbase-site.xml $HBASE_CONF_DIR/hbase-site.xml.backup
+    fi
+    echo "Override the hbase-site.xml"
+    cp $DIR/hbase/hbase-site.xml $HBASE_CONF_DIR/hbase-site.xml
+}
+
 DIR="${0%/*}"
 
 source $DIR/environment.sh
@@ -85,3 +94,4 @@ configureHadoop
 configureHive
 configureSpark
 configureAlluxio
+configureHbase

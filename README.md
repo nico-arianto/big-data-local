@@ -44,4 +44,4 @@ $ ./stop.sh
 * hive 3.1.1
 * apache-spark 2.4.0
 * alluxio 1.8.1
-* hbase 1.2.8
+* hbase 1.2.9

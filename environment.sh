@@ -9,3 +9,6 @@ export HIVE_CONF_DIR=$HIVE_HOME/conf
 export SPARK_HOME=/usr/local/opt/apache-spark/libexec
 export SPARK_CONF_DIR=$SPARK_HOME/conf
 export ALLUXIO_HOME=/usr/local/opt/alluxio/libexec
+# hbase-config.sh
+export HBASE_HOME=/usr/local/opt/hbase/libexec
+export HBASE_CONF_DIR=/usr/local/opt/hbase/libexec/conf
