@@ -38,6 +38,7 @@ installOrUpgradeHadoop
 installOrUpgradeHive
 installOrUpgrade apache-spark
 installOrUpgrade alluxio
+installOrUpgrade zookeeper
 installOrUpgrade hbase
 echo "Installing utilities softwares"
 installOrUpgrade coreutils

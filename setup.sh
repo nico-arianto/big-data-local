@@ -80,8 +80,14 @@ function configureHbase() {
         echo "Backup the hbase-site.xml to hbase-site.xml.backup"
         cp $HBASE_CONF_DIR/hbase-site.xml $HBASE_CONF_DIR/hbase-site.xml.backup
     fi
+    if [ ! -e $HBASE_CONF_DIR/hbase-env.sh.backup ]; then
+        echo "Backup the hbase-env.sh to hbase-env.sh.backup"
+        cp $HBASE_CONF_DIR/hbase-env.sh $HBASE_CONF_DIR/hbase-env.sh.backup
+    fi
     echo "Override the hbase-site.xml"
     cp $DIR/hbase/hbase-site.xml $HBASE_CONF_DIR/hbase-site.xml
+    echo "Override the hbase-env.sh"
+    cp $DIR/hbase/hbase-env.sh $HBASE_CONF_DIR/hbase-env.sh
 }
 
 DIR="${0%/*}"

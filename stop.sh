@@ -16,12 +16,18 @@ function stopHive() {
     brew services stop derby
 }
 
+function stopZookeeper() {
+    # brew services stop zookeeper
+    zkServer stop
+}
+
 function stopHbase() {
     # brew services stop hbase
     stop-hbase.sh
 }
 
 stopHbase
+stopZookeeper
 stopHive
 stopAlluxio
 stopHadoop

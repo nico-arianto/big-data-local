@@ -40,6 +40,11 @@ function startHive() {
     gtimeout 120 sh -c 'until nc -z $0 $1; do printf "." && sleep 1; done;' localhost 10000
 }
 
+function startZookeeper() {
+    # brew services start zookeeper
+    zkServer start
+}
+
 function startHbase() {
     # brew services start hbase
     start-hbase.sh
@@ -53,4 +58,5 @@ source $DIR/environment.sh
 startHadoop
 startAlluxio
 startHive
+startZookeeper
 startHbase
