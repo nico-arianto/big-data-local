@@ -1,8 +1,14 @@
 function stopHadoop() {
     echo "Stop ResourceManager daemon and NodeManager daemon"
-    stop-yarn.sh
+    $HADOOP_HOME/sbin/stop-yarn.sh
     echo "Stop NameNode daemon and DataNode daemon"
-    stop-dfs.sh
+    $HADOOP_HOME/sbin/stop-dfs.sh
+}
+
+function stopDerby() {
+    echo "Stop the Derby Network Server"
+    source setNetworkServerCP
+    java org.apache.derby.drda.NetworkServerControl shutdown
 }
 
 function stopAlluxio() {
@@ -12,22 +18,28 @@ function stopAlluxio() {
 
 function stopHive() {
     echo "Stop HiveServer2"
-    kill $(cat /tmp/hive2/pid)
-    brew services stop derby
+    local pidFile=/tmp/hiveserver2.pid
+    kill $(cat $pidFile)
+    rm $pidFile
 }
 
-function stopZookeeper() {
-    # brew services stop zookeeper
-    zkServer stop
+function stopZooKeeper() {
+    echo "Stop ZooKeeper"
+    zkServer.sh stop
 }
 
-function stopHbase() {
-    # brew services stop hbase
+function stopHBase() {
+    echo "Stop HBase"
     stop-hbase.sh
 }
 
-stopHbase
-stopZookeeper
+DIR="${0%/*}"
+
+source $DIR/environment.env
+
+stopHBase
+stopZooKeeper
 stopHive
 stopAlluxio
+stopDerby
 stopHadoop

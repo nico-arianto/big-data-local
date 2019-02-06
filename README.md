@@ -8,12 +8,6 @@ Big Data Automation in Local MacOS
 * Alluxio worker: http://localhost:30000
 * HBase HMaster: http://localhost:16010/
 
-# How to install
-Install the Big Data components via Homebrew
-```shell
-$ ./install.sh
-```
-
 # How to setup
 Override the Big Data components configuration files
 ```shell
@@ -31,7 +25,6 @@ $ ./stop.sh
 ```
 
 # References
-* Homebrew: https://brew.sh/
 * Hadoop: https://hadoop.apache.org/docs/current3/
 * Hive: https://cwiki.apache.org/confluence/display/Hive/Home
 * Alluxio: https://www.alluxio.org/docs/1.8/en/Getting-Started.html

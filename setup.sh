@@ -6,6 +6,7 @@ function enableRemoteLogin() {
         echo "Enabling Remote Login"
         sudo systemsetup -setremotelogin on
     fi
+    printf "\n"
 }
 
 function setupPassphraselessSSH() {
@@ -16,83 +17,108 @@ function setupPassphraselessSSH() {
         cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
         chmod 0600 ~/.ssh/authorized_keys
     fi
+    printf "\n"
+}
+
+function overrideConfiguration() {
+    local targetFile="$3/$1"
+    local backupFile="$3/$1.backup"
+    local sourceFile="$2/$1"
+    if [ ! -e $targetFile ]; then
+        echo "Creates an empty $backupFile"
+        touch $backupFile
+    fi
+    if [ ! -e $backupFile ]; then
+        echo "Backup the $targetFile to $backupFile"
+        cp $targetFile $backupFile
+    fi
+    echo "Override the $targetFile"
+    cp $sourceFile $targetFile
+    sed -i "" 's|{{HOME}}|'"$HOME"'|g' $targetFile
+    sed -i "" 's|{{JAVA_HOME}}|'"$JAVA_HOME"'|g' $targetFile
+    sed -i "" 's|{{HADOOP_HOME}}|'"$HADOOP_HOME"'|g' $targetFile
+    sed -i "" 's|{{HADOOP_CONF_DIR}}|'"$HADOOP_CONF_DIR"'|g' $targetFile
+    sed -i "" 's|{{ALLUXIO_HOME}}|'"$ALLUXIO_HOME"'|g' $targetFile
+    sed -i "" 's|{{HBASE_HOME}}|'"$HBASE_HOME"'|g' $targetFile
 }
 
 function configureHadoop() {
-    if [ ! -e $HADOOP_CONF_DIR/hadoop-env.sh.backup ]; then
-        echo "Backup the hadoop-env.sh to hadoop-env.sh.backup"
-        cp $HADOOP_CONF_DIR/hadoop-env.sh $HADOOP_CONF_DIR/hadoop-env.sh.backup
-    fi
-    if [ ! -e $HADOOP_CONF_DIR/core-site.xml.backup ]; then
-        echo "Backup the core-site.xml to core-site.xml.backup"
-        cp $HADOOP_CONF_DIR/core-site.xml $HADOOP_CONF_DIR/core-site.xml.backup
-    fi
-    if [ ! -e $HADOOP_CONF_DIR/hdfs-site.xml.backup ]; then
-        echo "Backup the hdfs-site.xml to hdfs-site.xml.backup"
-        cp $HADOOP_CONF_DIR/hdfs-site.xml $HADOOP_CONF_DIR/hdfs-site.xml.backup
-    fi
-    if [ ! -e $HADOOP_CONF_DIR/mapred-site.xml.backup ]; then
-        echo "Backup the mapred-site.xml to mapred-site.xml.backup"
-        cp $HADOOP_CONF_DIR/mapred-site.xml $HADOOP_CONF_DIR/mapred-site.xml.backup
-    fi
-    if [ ! -e $HADOOP_CONF_DIR/yarn-site.xml.backup ]; then
-        echo "Backup the yarn-site.xml to yarn-site.xml.backup"
-        cp $HADOOP_CONF_DIR/yarn-site.xml $HADOOP_CONF_DIR/yarn-site.xml.backup
-    fi
-    echo "Override the hadoop-env.sh"
-    sed -i '.backup' -e 's|# export JAVA_HOME=|export JAVA_HOME='"$JAVA_HOME"'|g' $DIR/hadoop/hadoop-env.sh
-    cp $DIR/hadoop/hadoop-env.sh $HADOOP_CONF_DIR/hadoop-env.sh
-    rm $DIR/hadoop/hadoop-env.sh
-    mv $DIR/hadoop/hadoop-env.sh.backup $DIR/hadoop/hadoop-env.sh
-    echo "Override the core-site.xml"
-    cp $DIR/hadoop/core-site.xml $HADOOP_CONF_DIR/core-site.xml
-    echo "Override the hdfs-site.xml"
-    cp $DIR/hadoop/hdfs-site.xml $HADOOP_CONF_DIR/hdfs-site.xml
-    echo "Override the mapred-site.xml"
-    cp $DIR/hadoop/mapred-site.xml $HADOOP_CONF_DIR/mapred-site.xml
-    echo "Override the yarn-site.xml"
-    cp $DIR/hadoop/yarn-site.xml $HADOOP_CONF_DIR/yarn-site.xml
+    echo "Configuring Hadoop"
+    local sourceDir="$DIR/hadoop"
+    for config in $sourceDir/*; do
+        overrideConfiguration $(basename $config) $sourceDir $HADOOP_CONF_DIR
+    done
+    printf "\n"
 }
 
 function configureHive() {
-    echo "Override the hive-env.sh"
-    cp $DIR/hive/hive-env.sh $HIVE_CONF_DIR/hive-env.sh
-    echo "Override the hive-site.xml"
-    cp $DIR/hive/hive-site.xml $HIVE_CONF_DIR/hive-site.xml
+    echo "Configuring Hive"
+    local sourceDir="$DIR/hive"
+    for config in $sourceDir/*; do
+        overrideConfiguration $(basename $config) $sourceDir $HIVE_CONF_DIR
+    done
+    printf "\n"
 }
 
 function configureSpark() {
-    echo "Override the hdfs-site.xml"
-    cp $HADOOP_CONF_DIR/hdfs-site.xml $SPARK_CONF_DIR/hdfs-site.xml
-    echo "Override the hive-site.xml"
-    cp $HIVE_CONF_DIR/hive-site.xml $SPARK_CONF_DIR/hive-site.xml
-    echo "Override the spark-defaults.conf"
-    cp $DIR/spark/spark-defaults.conf $SPARK_CONF_DIR/spark-defaults.conf
+    echo "Configuring Spark"
+    overrideConfiguration hdfs-site.xml $HADOOP_CONF_DIR $SPARK_CONF_DIR
+    overrideConfiguration hive-site.xml $HIVE_CONF_DIR $SPARK_CONF_DIR
+    local sourceDir="$DIR/spark"
+    for config in $sourceDir/*; do
+        overrideConfiguration $(basename $config) $sourceDir $SPARK_CONF_DIR
+    done
+    printf "\n"
 }
 
 function configureAlluxio() {
-    echo "Override the alluxio-site.properties"
-    cp $DIR/alluxio/alluxio-site.properties $ALLUXIO_HOME/conf/alluxio-site.properties
+    echo "Configuring Alluxio"
+    local sourceDir="$DIR/alluxio"
+    for config in $sourceDir/*; do
+        overrideConfiguration $(basename $config) $sourceDir $ALLUXIO_HOME/conf
+    done
+    printf "\n"
 }
 
-function configureHbase() {
-    if [ ! -e $HBASE_CONF_DIR/hbase-site.xml.backup ]; then
-        echo "Backup the hbase-site.xml to hbase-site.xml.backup"
-        cp $HBASE_CONF_DIR/hbase-site.xml $HBASE_CONF_DIR/hbase-site.xml.backup
+function configureZooKeeper() {
+    echo "Configuring ZooKeeper"
+    local sourceDir="$DIR/zookeeper"
+    for config in $sourceDir/*; do
+        overrideConfiguration $(basename $config) $sourceDir $ZOOKEEPER_HOME/conf
+    done
+    printf "\n"
+}
+
+function configureHBase() {
+    echo "Configuring HBase"
+    local sourceDir="$DIR/hbase"
+    for config in $sourceDir/*; do
+        overrideConfiguration $(basename $config) $sourceDir $HBASE_CONF_DIR
+    done
+    printf "\n"
+}
+
+function replaceHbaseHadoop() {
+    local libDir=$HBASE_HOME/lib
+    local libBackupDir=$HBASE_HOME/lib/hadoop-backup
+    if [ ! -d $libBackupDir ]; then
+        mkdir -p $libBackupDir
+        for hadoopLib in $(find $libDir -name "hadoop-*.jar"); do
+            echo "Backup the $hadoopLib to $libBackupDir"
+            mv $hadoopLib $libBackupDir
+            local hadoopLibName=$(basename $hadoopLib | sed 's/[0-9]/\[0-9\]/g')
+            local newHadoopLib=$(find $HADOOP_HOME -name "$hadoopLibName" | head -n 1)
+            if [ "$newHadoopLib" != "" ]; then
+                echo "Replace with $newHadoopLib"
+                cp $newHadoopLib $libDir
+            fi
+        done
     fi
-    if [ ! -e $HBASE_CONF_DIR/hbase-env.sh.backup ]; then
-        echo "Backup the hbase-env.sh to hbase-env.sh.backup"
-        cp $HBASE_CONF_DIR/hbase-env.sh $HBASE_CONF_DIR/hbase-env.sh.backup
-    fi
-    echo "Override the hbase-site.xml"
-    cp $DIR/hbase/hbase-site.xml $HBASE_CONF_DIR/hbase-site.xml
-    echo "Override the hbase-env.sh"
-    cp $DIR/hbase/hbase-env.sh $HBASE_CONF_DIR/hbase-env.sh
 }
 
 DIR="${0%/*}"
 
-source $DIR/environment.sh
+source $DIR/environment.env
 
 enableRemoteLogin
 setupPassphraselessSSH
@@ -100,4 +126,6 @@ configureHadoop
 configureHive
 configureSpark
 configureAlluxio
-configureHbase
+configureZooKeeper
+configureHBase
+replaceHbaseHadoop

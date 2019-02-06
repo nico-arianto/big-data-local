@@ -1,12 +1,26 @@
 function startHadoop() {
-    echo "Format the filesystem"
-    hdfs namenode -format -nonInteractive
+    if [ ! -d $HOME/Applications/var/hadoop ]; then
+        echo "Format the filesystem"
+        hdfs namenode -format -nonInteractive
+    fi
     echo "Start NameNode daemon and DataNode daemon"
-    start-dfs.sh
+    $HADOOP_HOME/sbin/start-dfs.sh
     echo "Make the HDFS directories required to execute MapReduce jobs"
     hdfs dfs -mkdir -p /user/$USER
     echo "Start ResourceManager daemon and NodeManager daemon"
-    start-yarn.sh
+    $HADOOP_HOME/sbin/start-yarn.sh
+}
+
+function startDerby() {
+    echo "Start the Derby Network Server"
+    local systemHome=$HOME/Applications/var/data/derby
+    local logDir=$HOME/Applications/var/log/derby
+    mkdir -p $systemHome
+    mkdir -p $logDir
+    source setNetworkServerCP
+    java -Dderby.system.home=$systemHome \
+        org.apache.derby.drda.NetworkServerControl start \
+        >$logDir/derby.out 2>$logDir/derby.err &
 }
 
 function startAlluxio() {
@@ -18,15 +32,10 @@ function startAlluxio() {
 
 function startHive() {
     echo "Make the HDFS directories before can create a table in Hive"
-    # init-hive-dfs.sh
-    hadoop fs -mkdir /tmp
+    hadoop fs -mkdir -p /tmp
     hadoop fs -mkdir -p /user/hive/warehouse
     hadoop fs -chmod g+w /tmp
     hadoop fs -chmod g+w /user/hive/warehouse
-    echo "Start Derby server"
-    brew services start derby
-    echo "Waiting for Derby service to start"
-    gtimeout 60 sh -c 'until nc -z $0 $1; do printf "." && sleep 1; done;' localhost 1527
     echo "Try Schema upgrade"
     schematool -dbType derby -upgradeSchema
     if [ ! "$?" = "0" ]; then
@@ -34,29 +43,29 @@ function startHive() {
         schematool -dbType derby -initSchema
     fi
     echo "Start HiveServer2"
-    mkdir -p /tmp/hive2/
-    nohup hiveserver2 > /tmp/hive2/err.log 2> /tmp/hive2/out.log & echo $! > /tmp/hive2/pid
-    echo "Waiting for HiveServer2 service to start"
-    gtimeout 120 sh -c 'until nc -z $0 $1; do printf "." && sleep 1; done;' localhost 10000
+    local logDir=$HOME/Applications/var/log/hiveserver2
+    mkdir -p $logDir
+    nohup hiveserver2 >$logDir/hiveserver2.out 2>$logDir/hiveserver2.err & \
+        echo $! > /tmp/hiveserver2.pid
 }
 
-function startZookeeper() {
-    # brew services start zookeeper
-    zkServer start
+function startZooKeeper() {
+    echo "Start ZooKeeper"
+    zkServer.sh start
 }
 
-function startHbase() {
-    # brew services start hbase
+function startHBase() {
+    echo "Start HBase"
     start-hbase.sh
 }
 
 DIR="${0%/*}"
-USER="$(id -u -n)"
 
-source $DIR/environment.sh
+source $DIR/environment.env
 
 startHadoop
+startDerby
 startAlluxio
 startHive
-startZookeeper
-startHbase
+startZooKeeper
+startHBase

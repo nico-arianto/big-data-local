@@ -45,10 +45,10 @@
 
 
 # Set HADOOP_HOME to point to a specific hadoop install directory
-HADOOP_HOME=/usr/local/opt/hadoop/libexec
+HADOOP_HOME={{HADOOP_HOME}}
 
 # Hive Configuration Directory can be controlled by:
 # export HIVE_CONF_DIR=
 
 # Folder containing extra libraries required for hive compilation/execution can be controlled by:
-export HIVE_AUX_JARS_PATH="/usr/local/opt/alluxio/libexec/client/alluxio-1.8.1-client.jar:${HIVE_AUX_JARS_PATH}"
+export HIVE_AUX_JARS_PATH="{{ALLUXIO_HOME}}/client/alluxio-1.8.1-client.jar:${HIVE_AUX_JARS_PATH}"

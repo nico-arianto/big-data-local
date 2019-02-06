@@ -51,7 +51,7 @@
 
 # The java implementation to use. By default, this environment
 # variable is REQUIRED on ALL platforms except OS X!
-# export JAVA_HOME=
+export JAVA_HOME={{JAVA_HOME}}
 
 # Location of Hadoop.  By default, Hadoop will attempt to determine
 # this location based upon its execution path.
@@ -88,7 +88,7 @@
 # Extra Java runtime options for all Hadoop commands. We don't support
 # IPv6 yet/still, so by default the preference is set to IPv4.
 # export HADOOP_OPTS="-Djava.net.preferIPv4Stack=true"
-# For Kerberos debugging, an extended option set logs more invormation
+# For Kerberos debugging, an extended option set logs more information
 # export HADOOP_OPTS="-Djava.net.preferIPv4Stack=true -Dsun.security.krb5.debug=true -Dsun.security.spnego.debug"
 
 # Some parts of the shell code may do special things dependent upon
@@ -120,9 +120,9 @@ esac
 #
 # By default, Apache Hadoop overrides Java's CLASSPATH
 # environment variable.  It is configured such
-# that it sarts out blank with new entries added after passing
+# that it starts out blank with new entries added after passing
 # a series of checks (file/dir exists, not already listed aka
-# de-deduplication).  During de-depulication, wildcards and/or
+# de-deduplication).  During de-deduplication, wildcards and/or
 # directories are *NOT* expanded to keep it simple. Therefore,
 # if the computed classpath has two specific mentions of
 # awesome-methods-1.0.jar, only the first one added will be seen.
@@ -136,7 +136,7 @@ esac
 # Similarly, end users should utilize ${HOME}/.hadooprc .
 # This variable should ideally only be used as a short-cut,
 # interactive way for temporary additions on the command line.
-export HADOOP_CLASSPATH="/usr/local/opt/alluxio/libexec/client/alluxio-1.8.1-client.jar:${HADOOP_CLASSPATH}"
+export HADOOP_CLASSPATH="{{ALLUXIO_HOME}}/client/alluxio-1.8.1-client.jar:${HADOOP_CLASSPATH}"
 
 # Should HADOOP_CLASSPATH be first in the official CLASSPATH?
 # export HADOOP_USER_CLASSPATH_FIRST="yes"
@@ -157,7 +157,7 @@ export HADOOP_CLASSPATH="/usr/local/opt/alluxio/libexec/client/alluxio-1.8.1-cli
 # Enable optional, bundled Hadoop features
 # This is a comma delimited list.  It may NOT be overridden via .hadooprc
 # Entries may be added/removed as needed.
-# export HADOOP_OPTIONAL_TOOLS="hadoop-azure-datalake,hadoop-azure,hadoop-openstack,hadoop-kafka,hadoop-aws,hadoop-aliyun"
+# export HADOOP_OPTIONAL_TOOLS="hadoop-aliyun,hadoop-aws,hadoop-azure-datalake,hadoop-azure,hadoop-kafka,hadoop-openstack"
 
 ###
 # Options for remote shell connectivity
@@ -197,7 +197,7 @@ export HADOOP_CLASSPATH="/usr/local/opt/alluxio/libexec/client/alluxio-1.8.1-cli
 # Where (primarily) daemon log files are stored.
 # ${HADOOP_HOME}/logs by default.
 # Java property: hadoop.log.dir
-# export HADOOP_LOG_DIR=${HADOOP_HOME}/logs
+export HADOOP_LOG_DIR={{HOME}}/Applications/var/log/hadoop
 
 # A string representing this instance of hadoop. $USER by default.
 # This is used in writing log and pid files, so keep that in mind!
@@ -402,7 +402,15 @@ export HADOOP_CLASSPATH="/usr/local/opt/alluxio/libexec/client/alluxio-1.8.1-cli
 # and therefore may override any similar flags set in HADOOP_OPTS
 #
 # export HDFS_DFSROUTER_OPTS=""
+
 ###
+# HDFS StorageContainerManager specific parameters
+###
+# Specify the JVM options to be used when starting the HDFS Storage Container Manager.
+# These options will be appended to the options specified as HADOOP_OPTS
+# and therefore may override any similar flags set in HADOOP_OPTS
+#
+# export HDFS_STORAGECONTAINERMANAGER_OPTS=""
 
 ###
 # Advanced Users Only!

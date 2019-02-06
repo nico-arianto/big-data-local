@@ -26,4 +26,8 @@
         <value>alluxio.hadoop.FileSystem</value>
         <description>The Alluxio FileSystem</description>
     </property>
+    <property>
+        <name>hadoop.tmp.dir</name>
+        <value>${user.home}/Applications/var/data/hadoop</value>
+    </property>
 </configuration>
