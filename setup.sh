@@ -98,41 +98,6 @@ function configureHBase() {
     printf "\n"
 }
 
-function replaceHBaseHadoopLib() {
-    local hadoopLib=$1
-    local libBackupDir=$2
-    local hadoopLibName=$3
-    local libDir=$4
-    local newHadoopLib=$(find $HADOOP_HOME -name "$hadoopLibName" | head -n 1)
-    echo "Backup the $hadoopLib to $libBackupDir"
-    mv $hadoopLib $libBackupDir
-    if [ "$newHadoopLib" != "" ]; then
-        echo "Replace with $newHadoopLib"
-        cp $newHadoopLib $libDir
-    fi
-}
-
-function findAndReplaceHBaseHadoopLib() {
-    local hadoopLib=$(find $libDir -name "$1" | head -n 1)
-    local libBackupDir=$2
-    local hadoopLibName=$1
-    local libDir=$3
-    replaceHBaseHadoopLib $hadoopLib $libBackupDir $hadoopLibName $libDir
-}
-
-function replaceHBaseHadoop() {
-    local libDir=$HBASE_HOME/lib
-    local libBackupDir=$HBASE_HOME/lib/hadoop-backup
-    if [ ! -d $libBackupDir ]; then
-        mkdir -p $libBackupDir
-        for hadoopLib in $(find $libDir -name "hadoop-*.jar"); do
-            local hadoopLibName=$(basename $hadoopLib | sed 's/[0-9]/\[0-9\]/g')
-            replaceHBaseHadoopLib $hadoopLib $libBackupDir $hadoopLibName $libDir
-        done
-        findAndReplaceHBaseHadoopLib "commons-beanutil*.jar" $libBackupDir $libDir
-    fi
-}
-
 DIR="${0%/*}"
 
 source $DIR/environment.env
@@ -145,4 +110,3 @@ configureSpark
 configureAlluxio
 configureZooKeeper
 configureHBase
-# replaceHBaseHadoop
