@@ -28,7 +28,7 @@
 export JAVA_HOME={{JAVA_HOME}}
 
 # Extra Java CLASSPATH elements.  Optional.
-# export HBASE_CLASSPATH=
+export HBASE_CLASSPATH={{HBASE_HOME}}/lib/client-facing-thirdparty/*
 
 # The maximum amount of heap to use. Default is left to JVM default.
 # export HBASE_HEAPSIZE=1G

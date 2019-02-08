@@ -1,5 +1,5 @@
 HADOOP_BINARY=https://www-us.apache.org/dist/hadoop/common/hadoop-$HADOOP_VERSION/hadoop-$HADOOP_VERSION.tar.gz
-HADOOP_MD5=5ac41982dc50c96c897c70758fc54ca3
+HADOOP_MD5=cc2f019f2a41458df8430c448bb9f760
 
 DEBRY_BINARY=https://www-us.apache.org/dist//db/derby/db-derby-$DERBY_VERSION/db-derby-$DERBY_VERSION-bin.tar.gz
 DEBRY_MD5=d2b8bd09a5d059154efe67af92cc8597
