@@ -64,6 +64,7 @@ function configureHive() {
 
 function configureSpark() {
     echo "Configuring Spark"
+    overrideConfiguration hive-site.xml $HIVE_CONF_DIR $SPARK_CONF_DIR
     local sourceDir="$DIR/spark"
     for config in $sourceDir/*; do
         overrideConfiguration $(basename $config) $sourceDir $SPARK_CONF_DIR
