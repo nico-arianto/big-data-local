@@ -37,6 +37,7 @@
 # - HADOOP_CONF_DIR, to point Spark towards Hadoop configuration files
 export HADOOP_CONF_DIR={{HADOOP_CONF_DIR}}
 # - YARN_CONF_DIR, to point Spark towards YARN configuration files when you use YARN
+export YARN_CONF_DIR={{HADOOP_CONF_DIR}}
 # - SPARK_EXECUTOR_CORES, Number of cores for the executors (Default: 1).
 # - SPARK_EXECUTOR_MEMORY, Memory per Executor (e.g. 1000M, 2G) (Default: 1G)
 # - SPARK_DRIVER_MEMORY, Memory for Driver (e.g. 1000M, 2G) (Default: 1G)

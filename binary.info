@@ -5,9 +5,9 @@ DEBRY_BINARY=https://www-us.apache.org/dist//db/derby/db-derby-$DERBY_VERSION/db
 DEBRY_MD5=d2b8bd09a5d059154efe67af92cc8597
 
 HIVE_BINARY=https://www-us.apache.org/dist/hive/hive-$HIVE_VERSION/apache-hive-$HIVE_VERSION-bin.tar.gz
-HIVE_MD5=75072eb4005299239296ec5b196c99aa
+HIVE_MD5=37d60f14428687590ae81a066ab145b7
 
-SPARK_BINARY=https://www-us.apache.org/dist/spark/spark-$SPARK_VERSION/spark-$SPARK_VERSION-bin-hadoop$SPARK_PRE_BUILT_FOR_HADOOP_VERSION.tgz
+SPARK_BINARY=https://www-us.apache.org/dist/spark/spark-$SPARK_VERSION/spark-$SPARK_VERSION-bin-hadoop$SPARK_HADOOP_VERSION.tgz
 SPARK_MD5=c1a230474c21335c983f45e84dcf8fb9
 
 ALLUXIO_BINARY=http://downloads.alluxio.org/downloads/files/$ALLUXIO_VERSION/alluxio-$ALLUXIO_VERSION-bin.tar.gz
@@ -18,3 +18,6 @@ ZOOKEEPER_MD5=c380eb03049998280895078d570cb944
 
 HBASE_BINARY=https://www-us.apache.org/dist/hbase/$HBASE_VERSION/hbase-$HBASE_VERSION-bin.tar.gz
 HBASE_MD5=558f4dfb664c71604a92be05a5bb4323
+
+PHOENIX_BINARY=https://www-us.apache.org/dist/phoenix/apache-phoenix-$PHOENIX_VERSION-HBase-$PHOENIX_HBASE_VERSION/bin/apache-phoenix-$PHOENIX_VERSION-HBase-$PHOENIX_HBASE_VERSION-bin.tar.gz
+PHOENIX_MD5=7a78bc70b80093cdfa398b3a4f17d3ec

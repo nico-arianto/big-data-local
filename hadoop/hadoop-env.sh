@@ -41,7 +41,7 @@ for f in $HADOOP_HOME/contrib/capacity-scheduler/*.jar; do
   fi
 done
 
-export HADOOP_CLASSPATH="{{ALLUXIO_HOME}}/client/alluxio-1.8.1-client.jar:${HADOOP_CLASSPATH}"
+export HADOOP_CLASSPATH="{{ALLUXIO_CLIENT_JAR}}:${HADOOP_CLASSPATH}"
 
 # The maximum amount of heap to use, in MB. Default is 1000.
 #export HADOOP_HEAPSIZE=

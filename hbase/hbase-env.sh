@@ -28,7 +28,7 @@
 export JAVA_HOME={{JAVA_HOME}}
 
 # Extra Java CLASSPATH elements.  Optional.
-export HBASE_CLASSPATH={{HBASE_HOME}}/lib/client-facing-thirdparty/*
+export HBASE_CLASSPATH={{PHOENIX_SERVER_JAR}}
 
 # The maximum amount of heap to use. Default is left to JVM default.
 # export HBASE_HEAPSIZE=1G

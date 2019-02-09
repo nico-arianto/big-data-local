@@ -38,8 +38,10 @@ function overrideConfiguration() {
     sed -i "" 's|{{JAVA_HOME}}|'"$JAVA_HOME"'|g' $targetFile
     sed -i "" 's|{{HADOOP_HOME}}|'"$HADOOP_HOME"'|g' $targetFile
     sed -i "" 's|{{HADOOP_CONF_DIR}}|'"$HADOOP_CONF_DIR"'|g' $targetFile
-    sed -i "" 's|{{ALLUXIO_HOME}}|'"$ALLUXIO_HOME"'|g' $targetFile
-    sed -i "" 's|{{HBASE_HOME}}|'"$HBASE_HOME"'|g' $targetFile
+    sed -i "" 's|{{DERBY_CLIENT_JAR}}|'"$DERBY_CLIENT_JAR"'|g' $targetFile
+    sed -i "" 's|{{ALLUXIO_CLIENT_JAR}}|'"$ALLUXIO_CLIENT_JAR"'|g' $targetFile
+    sed -i "" 's|{{PHOENIX_SERVER_JAR}}|'"$PHOENIX_SERVER_JAR"'|g' $targetFile
+    sed -i "" 's|{{PHOENIX_CLIENT_JAR}}|'"$PHOENIX_CLIENT_JAR"'|g' $targetFile
 }
 
 function configureHadoop() {
@@ -62,8 +64,6 @@ function configureHive() {
 
 function configureSpark() {
     echo "Configuring Spark"
-    overrideConfiguration hdfs-site.xml $HADOOP_CONF_DIR $SPARK_CONF_DIR
-    overrideConfiguration hive-site.xml $HIVE_CONF_DIR $SPARK_CONF_DIR
     local sourceDir="$DIR/spark"
     for config in $sourceDir/*; do
         overrideConfiguration $(basename $config) $sourceDir $SPARK_CONF_DIR
