@@ -4,8 +4,8 @@ HADOOP_MD5=cc2f019f2a41458df8430c448bb9f760
 DEBRY_BINARY=https://www-us.apache.org/dist//db/derby/db-derby-$DERBY_VERSION/db-derby-$DERBY_VERSION-bin.tar.gz
 DEBRY_MD5=d2b8bd09a5d059154efe67af92cc8597
 
-HIVE_BINARY=https://www-us.apache.org/dist/hive/hive-$HIVE_VERSION/apache-hive-$HIVE_VERSION-bin.tar.gz
-HIVE_MD5=37d60f14428687590ae81a066ab145b7
+HIVE_BINARY=https://archive.apache.org/dist/hive/hive-$HIVE_VERSION/apache-hive-$HIVE_VERSION-bin.tar.gz
+HIVE_MD5=b61c46e08f0647d5217bbe43d9b01752
 
 SPARK_BINARY=https://www-us.apache.org/dist/spark/spark-$SPARK_VERSION/spark-$SPARK_VERSION-bin-hadoop$SPARK_HADOOP_VERSION.tgz
 SPARK_MD5=c1a230474c21335c983f45e84dcf8fb9

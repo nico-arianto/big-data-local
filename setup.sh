@@ -38,6 +38,8 @@ function overrideConfiguration() {
     sed -i "" 's|{{JAVA_HOME}}|'"$JAVA_HOME"'|g' $targetFile
     sed -i "" 's|{{HADOOP_HOME}}|'"$HADOOP_HOME"'|g' $targetFile
     sed -i "" 's|{{HADOOP_CONF_DIR}}|'"$HADOOP_CONF_DIR"'|g' $targetFile
+    sed -i "" 's|{{HIVE_HOME}}|'"$HIVE_HOME"'|g' $targetFile
+    sed -i "" 's|{{HIVE_VERSION}}|'"$HIVE_VERSION"'|g' $targetFile
     sed -i "" 's|{{DERBY_CLIENT_JAR}}|'"$DERBY_CLIENT_JAR"'|g' $targetFile
     sed -i "" 's|{{ALLUXIO_CLIENT_JAR}}|'"$ALLUXIO_CLIENT_JAR"'|g' $targetFile
     sed -i "" 's|{{PHOENIX_SERVER_JAR}}|'"$PHOENIX_SERVER_JAR"'|g' $targetFile
