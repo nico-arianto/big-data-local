@@ -44,6 +44,7 @@ function overrideConfiguration() {
     sed -i "" 's|{{ALLUXIO_CLIENT_JAR}}|'"$ALLUXIO_CLIENT_JAR"'|g' $targetFile
     sed -i "" 's|{{PHOENIX_SERVER_JAR}}|'"$PHOENIX_SERVER_JAR"'|g' $targetFile
     sed -i "" 's|{{PHOENIX_CLIENT_JAR}}|'"$PHOENIX_CLIENT_JAR"'|g' $targetFile
+    sed -i "" 's|{{PHOENIX_HIVE_JAR}}|'"$PHOENIX_HIVE_JAR"'|g' $targetFile
 }
 
 function configureHadoop() {
@@ -104,6 +105,12 @@ function configureHBase() {
 DIR="${0%/*}"
 
 source $DIR/environment.env
+
+DERBY_CLIENT_JAR=$DERBY_HOME/lib/derbyclient.jar
+ALLUXIO_CLIENT_JAR=$ALLUXIO_HOME/client/alluxio-$ALLUXIO_VERSION-client.jar
+PHOENIX_SERVER_JAR=$PHOENIX_HOME/phoenix-$PHOENIX_VERSION-HBase-$PHOENIX_HBASE_VERSION-server.jar
+PHOENIX_CLIENT_JAR=$PHOENIX_HOME/phoenix-$PHOENIX_VERSION-HBase-$PHOENIX_HBASE_VERSION-client.jar
+PHOENIX_HIVE_JAR=$PHOENIX_HOME/phoenix-$PHOENIX_VERSION-HBase-$PHOENIX_HBASE_VERSION-hive.jar
 
 enableRemoteLogin
 setupPassphraselessSSH

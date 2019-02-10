@@ -33,4 +33,8 @@
     <name>hive.server2.enable.doAs</name>
     <value>false</value>
   </property>
+  <!-- <property>
+    <name>hive.aux.jars.path</name>
+    <value>{{PHOENIX_HIVE_JAR}}</value>
+  </property> -->
 </configuration>
