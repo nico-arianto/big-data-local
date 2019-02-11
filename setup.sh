@@ -101,6 +101,15 @@ function configureHBase() {
     printf "\n"
 }
 
+function configureKafka() {
+    echo "Configuring Kafka"
+    local sourceDir="$DIR/kafka"
+    for config in $sourceDir/*; do
+        overrideConfiguration $(basename $config) $sourceDir $KAFKA_HOME/config
+    done
+    printf "\n"
+}
+
 DIR="${0%/*}"
 
 source $DIR/environment.env
@@ -118,3 +127,4 @@ configureSpark
 configureAlluxio
 configureZooKeeper
 configureHBase
+configureKafka

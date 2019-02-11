@@ -66,6 +66,8 @@ function startPhoenix() {
 
 function startKafka() {
     echo "Start Kafka"
+    export LOG_DIR=$HOME/Applications/var/log/kafka
+    nohup kafka-server-start.sh -daemon $KAFKA_HOME/config/server.properties
 }
 
 DIR="${0%/*}"

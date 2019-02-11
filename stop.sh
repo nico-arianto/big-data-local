@@ -40,6 +40,7 @@ function stopPhoenix() {
 
 function stopKafka() {
     echo "Stop Kafka"
+    kafka-server-stop.sh
 }
 
 DIR="${0%/*}"
