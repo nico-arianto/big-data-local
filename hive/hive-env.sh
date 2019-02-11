@@ -51,5 +51,4 @@ HADOOP_HOME={{HADOOP_HOME}}
 # export HIVE_CONF_DIR=
 
 # Folder containing extra libraries required for hive compilation/execution can be controlled by:
-# export HIVE_AUX_JARS_PATH={{ALLUXIO_CLIENT_JAR}}:{{PHOENIX_HIVE_JAR}}
 export HIVE_AUX_JARS_PATH={{ALLUXIO_CLIENT_JAR}}

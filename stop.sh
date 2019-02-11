@@ -33,10 +33,21 @@ function stopHBase() {
     stop-hbase.sh
 }
 
+function stopPhoenix() {
+    echo "Stop Phoenix Query Server"
+    queryserver.py stop
+}
+
+function stopKafka() {
+    echo "Stop Kafka"
+}
+
 DIR="${0%/*}"
 
 source $DIR/environment.env
 
+stopKafka
+stopPhoenix
 stopHBase
 stopZooKeeper
 stopHive

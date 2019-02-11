@@ -24,7 +24,7 @@
 # so try to keep things idempotent unless you want to take an even deeper look
 # into the startup scripts (bin/hbase, etc.)
 
-# The java implementation to use.  Java 1.8+ required.
+# The java implementation to use.  Java 1.7+ required.
 export JAVA_HOME={{JAVA_HOME}}
 
 # Extra Java CLASSPATH elements.  Optional.
@@ -40,8 +40,12 @@ export HBASE_CLASSPATH={{PHOENIX_SERVER_JAR}}
 # Extra Java runtime options.
 # Below are what we set by default.  May only work with SUN JVM.
 # For more on why as well as other possible settings,
-# see http://hbase.apache.org/book.html#performance
-export HBASE_OPTS="$HBASE_OPTS -XX:+UseConcMarkSweepGC"
+# see http://wiki.apache.org/hadoop/PerformanceTuning
+export HBASE_OPTS="-XX:+UseConcMarkSweepGC"
+
+# Configure PermSize. Only needed in JDK7. You can safely remove it for JDK8+
+# export HBASE_MASTER_OPTS="$HBASE_MASTER_OPTS -XX:PermSize=128m -XX:MaxPermSize=128m -XX:ReservedCodeCacheSize=256m"
+# export HBASE_REGIONSERVER_OPTS="$HBASE_REGIONSERVER_OPTS -XX:PermSize=128m -XX:MaxPermSize=128m -XX:ReservedCodeCacheSize=256m"
 
 # Uncomment one of the below three options to enable java garbage collection logging for the server-side processes.
 
@@ -114,14 +118,14 @@ export HBASE_LOG_DIR={{HOME}}/Applications/var/log/hbase
 # export HBASE_NICENESS=10
 
 # The directory where pid files are stored. /tmp by default.
-# export HBASE_PID_DIR=/var/hadoop/pids
+export HBASE_PID_DIR=/tmp
 
 # Seconds to sleep between slave commands.  Unset by default.  This
 # can be useful in large clusters, where, e.g., slave rsyncs can
 # otherwise arrive faster than the master can service them.
 # export HBASE_SLAVE_SLEEP=0.1
 
-# Tell HBase whether it should manage it's own instance of ZooKeeper or not.
+# Tell HBase whether it should manage it's own instance of Zookeeper or not.
 export HBASE_MANAGES_ZK=false
 
 # The default log rolling policy is RFA, where the log file is rolled as per the size defined for the 

@@ -29,6 +29,8 @@ $ ./stop.sh
 * Hive: https://cwiki.apache.org/confluence/display/Hive/
 * Alluxio: https://www.alluxio.org/docs/1.8/en/
 * HBase: https://hbase.apache.org/book.html
+* Phoenix: https://phoenix.apache.org/
+* Kafka: http://kafka.apache.org/documentation/
 * Derby: https://db.apache.org/derby/docs/10.14/
 
 # Tested with
@@ -37,4 +39,6 @@ $ ./stop.sh
 * hive 3.1.1
 * apache-spark 2.4.0
 * alluxio 1.8.1
-* hbase 2.1.2
+* hbase 1.4.9
+* phoenix 4.14.1
+* kafka 2.1.0

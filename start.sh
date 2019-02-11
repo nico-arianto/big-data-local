@@ -59,6 +59,15 @@ function startHBase() {
     start-hbase.sh
 }
 
+function startPhoenix() {
+    echo "Start Phoenix Query Server"
+    queryserver.py start
+}
+
+function startKafka() {
+    echo "Start Kafka"
+}
+
 DIR="${0%/*}"
 
 source $DIR/environment.env
@@ -69,3 +78,5 @@ startAlluxio
 startHive
 startZooKeeper
 startHBase
+startPhoenix
+startKafka

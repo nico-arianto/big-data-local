@@ -17,7 +17,10 @@ ZOOKEEPER_BINARY=https://www-us.apache.org/dist/zookeeper/zookeeper-$ZOOKEEPER_V
 ZOOKEEPER_MD5=c380eb03049998280895078d570cb944
 
 HBASE_BINARY=https://www-us.apache.org/dist/hbase/$HBASE_VERSION/hbase-$HBASE_VERSION-bin.tar.gz
-HBASE_MD5=558f4dfb664c71604a92be05a5bb4323
+HBASE_MD5=c173aec0b9d7c4090d697bd5b7a04069
 
 PHOENIX_BINARY=https://www-us.apache.org/dist/phoenix/apache-phoenix-$PHOENIX_VERSION-HBase-$PHOENIX_HBASE_VERSION/bin/apache-phoenix-$PHOENIX_VERSION-HBase-$PHOENIX_HBASE_VERSION-bin.tar.gz
-PHOENIX_MD5=7a78bc70b80093cdfa398b3a4f17d3ec
+PHOENIX_MD5=e0df079ad76cb2a1785b164e5f338d34
+
+KAFKA_BINARY=https://www-us.apache.org/dist/kafka/$KAFKA_VERSION/kafka_$KAFKA_SCALA_VERSION-$KAFKA_VERSION.tgz
+KAFKA_MD5=d3986e8b25219033f2ec4fc86197bccc
