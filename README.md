@@ -24,6 +24,11 @@ $ ./start.sh
 $ ./stop.sh
 ```
 
+# How to set the environment
+```shell
+$ source ./environment.env
+```
+
 # References
 * Hadoop: https://hadoop.apache.org/docs/r2.7.7/
 * Hive: https://cwiki.apache.org/confluence/display/Hive/
