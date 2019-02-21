@@ -31,6 +31,7 @@ $ source ./environment.env
 
 # References
 * Hadoop: https://hadoop.apache.org/docs/r2.7.7/
+* Tez: https://cwiki.apache.org/confluence/display/TEZ/
 * Hive: https://cwiki.apache.org/confluence/display/Hive/
 * Alluxio: https://www.alluxio.org/docs/1.8/en/
 * HBase: https://hbase.apache.org/book.html
@@ -40,6 +41,7 @@ $ source ./environment.env
 
 # Tested with
 * hadoop 2.7.7
+* Tez 0.9.1
 * derby 10.14.2.0
 * hive 3.1.1
 * apache-spark 2.4.0

@@ -6,8 +6,14 @@ function startHadoop() {
     echo "Start NameNode daemon and DataNode daemon"
     $HADOOP_HOME/sbin/start-dfs.sh
     echo "Make the HDFS directories required to execute MapReduce jobs"
-    hdfs dfs -mkdir -p /user/$USER
+    hadoop fs -mkdir -p /user/$USER
     echo "Start ResourceManager daemon and NodeManager daemon"
+    hadoop fs -test -d /apps/tez-$TEZ_VERSION
+    if [ ! "$?" = "0" ]; then
+        echo "Upload Tez tarball to HDFS"
+        hadoop fs -mkdir -p /apps/tez-$TEZ_VERSION
+        hadoop fs -copyFromLocal $APPLICATION_DIR/apache-tez-$TEZ_VERSION-bin/share/tez.tar.gz /apps/tez-$TEZ_VERSION
+    fi
     $HADOOP_HOME/sbin/start-yarn.sh
 }
 

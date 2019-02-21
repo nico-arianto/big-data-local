@@ -38,6 +38,9 @@ function overrideConfiguration() {
     sed -i "" 's|{{JAVA_HOME}}|'"$JAVA_HOME"'|g' $targetFile
     sed -i "" 's|{{HADOOP_HOME}}|'"$HADOOP_HOME"'|g' $targetFile
     sed -i "" 's|{{HADOOP_CONF_DIR}}|'"$HADOOP_CONF_DIR"'|g' $targetFile
+    sed -i "" 's|{{TEZ_VERSION}}|'"$TEZ_VERSION"'|g' $targetFile
+    sed -i "" 's|{{TEZ_CONF_DIR}}|'"$TEZ_CONF_DIR"'|g' $targetFile
+    sed -i "" 's|{{TEZ_JARS}}|'"$TEZ_JARS"'|g' $targetFile
     sed -i "" 's|{{HIVE_HOME}}|'"$HIVE_HOME"'|g' $targetFile
     sed -i "" 's|{{HIVE_VERSION}}|'"$HIVE_VERSION"'|g' $targetFile
     sed -i "" 's|{{DERBY_CLIENT_JAR}}|'"$DERBY_CLIENT_JAR"'|g' $targetFile
@@ -51,6 +54,15 @@ function configureHadoop() {
     local sourceDir="$DIR/hadoop"
     for config in $sourceDir/*; do
         overrideConfiguration $(basename $config) $sourceDir $HADOOP_CONF_DIR
+    done
+    printf "\n"
+}
+
+function configureTez() {
+    echo "Configuring Tez"
+    local sourceDir="$DIR/tez"
+    for config in $sourceDir/*; do
+        overrideConfiguration $(basename $config) $sourceDir $TEZ_CONF_DIR
     done
     printf "\n"
 }
@@ -122,6 +134,7 @@ PHOENIX_CLIENT_JAR=$PHOENIX_HOME/phoenix-$PHOENIX_VERSION-HBase-$PHOENIX_HBASE_V
 enableRemoteLogin
 setupPassphraselessSSH
 configureHadoop
+configureTez
 configureHive
 configureSpark
 configureAlluxio

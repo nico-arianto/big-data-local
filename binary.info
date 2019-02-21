@@ -1,6 +1,9 @@
 HADOOP_BINARY=https://www-us.apache.org/dist/hadoop/common/hadoop-$HADOOP_VERSION/hadoop-$HADOOP_VERSION.tar.gz
 HADOOP_MD5=cc2f019f2a41458df8430c448bb9f760
 
+TEZ_BINARY=https://www-us.apache.org/dist/tez/$TEZ_VERSION/apache-tez-$TEZ_VERSION-bin.tar.gz
+TEZ_MD5=75776a0095aaa169a85fcbadff2d0018
+
 DEBRY_BINARY=https://www-us.apache.org/dist//db/derby/db-derby-$DERBY_VERSION/db-derby-$DERBY_VERSION-bin.tar.gz
 DEBRY_MD5=d2b8bd09a5d059154efe67af92cc8597
 

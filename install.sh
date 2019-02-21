@@ -56,6 +56,7 @@ source $DIR/directory.info
 
 declare -a packages=(
     "$HADOOP_BINARY|$HADOOP_MD5"
+    "$TEZ_BINARY|$TEZ_MD5"
     "$DEBRY_BINARY|$DEBRY_MD5"
     "$HIVE_BINARY|$HIVE_MD5"
     "$SPARK_BINARY|$SPARK_MD5"
