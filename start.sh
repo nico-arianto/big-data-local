@@ -31,7 +31,7 @@ function startDerby() {
 
 function startAlluxio() {
     echo "Format Alluxio master and all workers"
-    alluxio format
+    alluxio format -s
     echo "Start all masters, proxies, and workers"
     alluxio-start.sh local SudoMount
 }
