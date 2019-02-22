@@ -43,7 +43,6 @@ function overrideConfiguration() {
     sed -i "" 's|{{TEZ_JARS}}|'"$TEZ_JARS"'|g' $targetFile
     sed -i "" 's|{{HIVE_HOME}}|'"$HIVE_HOME"'|g' $targetFile
     sed -i "" 's|{{HIVE_VERSION}}|'"$HIVE_VERSION"'|g' $targetFile
-    sed -i "" 's|{{DERBY_CLIENT_JAR}}|'"$DERBY_CLIENT_JAR"'|g' $targetFile
     sed -i "" 's|{{ALLUXIO_CLIENT_JAR}}|'"$ALLUXIO_CLIENT_JAR"'|g' $targetFile
     sed -i "" 's|{{PHOENIX_SERVER_JAR}}|'"$PHOENIX_SERVER_JAR"'|g' $targetFile
     sed -i "" 's|{{PHOENIX_CLIENT_JAR}}|'"$PHOENIX_CLIENT_JAR"'|g' $targetFile
@@ -126,7 +125,6 @@ DIR="${0%/*}"
 
 source $DIR/environment.env
 
-DERBY_CLIENT_JAR=$DERBY_HOME/lib/derbyclient.jar
 ALLUXIO_CLIENT_JAR=$ALLUXIO_HOME/client/alluxio-$ALLUXIO_VERSION-client.jar
 PHOENIX_SERVER_JAR=$PHOENIX_HOME/phoenix-$PHOENIX_VERSION-HBase-$PHOENIX_HBASE_VERSION-server.jar
 PHOENIX_CLIENT_JAR=$PHOENIX_HOME/phoenix-$PHOENIX_VERSION-HBase-$PHOENIX_HBASE_VERSION-client.jar
