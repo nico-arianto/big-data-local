@@ -18,9 +18,13 @@ function stopAlluxio() {
 
 function stopHive() {
     echo "Stop HiveServer2"
-    local pidFile=/tmp/hiveserver2.pid
-    kill $(cat $pidFile)
-    rm $pidFile
+    local hiveserver2PidFile=/tmp/hiveserver2.pid
+    kill $(cat $hiveserver2PidFile)
+    rm $hiveserver2PidFile
+    echo "Stop Metastore Server"
+    local metastorePidFile=/tmp/hivemetastore.pid
+    kill $(cat $metastorePidFile)
+    rm $metastorePidFile
 }
 
 function stopZooKeeper() {

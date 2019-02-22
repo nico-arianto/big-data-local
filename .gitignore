@@ -1,4 +1,5 @@
 nohup.out
 metastore_db
 derby.log
+spark-warehouse
 jd-gui.cfg

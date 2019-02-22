@@ -49,10 +49,15 @@ function startHive() {
         schematool -dbType derby -initSchema
     fi
     echo "Start HiveServer2"
-    local logDir=$HOME/Applications/var/log/hiveserver2
-    mkdir -p $logDir
-    nohup hiveserver2 >$logDir/hiveserver2.out 2>$logDir/hiveserver2.err & \
+    local hiveserver2LogDir=$HOME/Applications/var/log/hive/hiveserver2
+    mkdir -p $hiveserver2LogDir
+    nohup hiveserver2 >$hiveserver2LogDir/hiveserver2.out 2>$hiveserver2LogDir/hiveserver2.err & \
         echo $! > /tmp/hiveserver2.pid
+    echo "Start Metastore Server"
+    local metastoreLogDir=$HOME/Applications/var/log/hive/metastore
+    mkdir -p $metastoreLogDir
+    nohup hive --service metastore >$metastoreLogDir/hivemetastore.out 2>$metastoreLogDir/hivemetastore.err & \
+        echo $! > /tmp/hivemetastore.pid
 }
 
 function startZooKeeper() {
