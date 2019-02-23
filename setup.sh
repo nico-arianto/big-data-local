@@ -85,6 +85,15 @@ function configureSpark() {
     printf "\n"
 }
 
+function configureLivy() {
+    echo "Configuring Livy"
+    local sourceDir="$DIR/livy"
+    for config in $sourceDir/*; do
+        overrideConfiguration $(basename $config) $sourceDir $LIVY_HOME/conf
+    done
+    printf "\n"
+}
+
 function configureAlluxio() {
     echo "Configuring Alluxio"
     local sourceDir="$DIR/alluxio"
@@ -135,6 +144,7 @@ configureHadoop
 configureTez
 configureHive
 configureSpark
+configureLivy
 configureAlluxio
 configureZooKeeper
 configureHBase

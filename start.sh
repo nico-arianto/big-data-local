@@ -17,6 +17,13 @@ function startHadoop() {
     $HADOOP_HOME/sbin/start-yarn.sh
 }
 
+function startAlluxio() {
+    echo "Format Alluxio master and all workers"
+    alluxio format -s
+    echo "Start all masters, proxies, and workers"
+    alluxio-start.sh local SudoMount
+}
+
 function startDerby() {
     echo "Start the Derby Network Server"
     local systemHome=$HOME/Applications/var/data/derby
@@ -27,13 +34,6 @@ function startDerby() {
     java -Dderby.system.home=$systemHome \
         org.apache.derby.drda.NetworkServerControl start \
         >$logDir/derby.out 2>$logDir/derby.err &
-}
-
-function startAlluxio() {
-    echo "Format Alluxio master and all workers"
-    alluxio format -s
-    echo "Start all masters, proxies, and workers"
-    alluxio-start.sh local SudoMount
 }
 
 function startHive() {
@@ -58,6 +58,11 @@ function startHive() {
     mkdir -p $hiveserver2LogDir
     nohup hiveserver2 >$hiveserver2LogDir/hiveserver2.out 2>$hiveserver2LogDir/hiveserver2.err & \
         echo $! > /tmp/hiveserver2.pid
+}
+
+function startLivy() {
+    echo "Start Livy"
+    livy-server start
 }
 
 function startZooKeeper() {
@@ -86,9 +91,10 @@ DIR="${0%/*}"
 source $DIR/environment.env
 
 startHadoop
-startDerby
 startAlluxio
+startDerby
 startHive
+startLivy
 startZooKeeper
 startHBase
 startPhoenix

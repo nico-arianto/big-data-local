@@ -27,3 +27,6 @@ PHOENIX_MD5=e0df079ad76cb2a1785b164e5f338d34
 
 KAFKA_BINARY=https://www-us.apache.org/dist/kafka/$KAFKA_VERSION/kafka_$KAFKA_SCALA_VERSION-$KAFKA_VERSION.tgz
 KAFKA_MD5=d3986e8b25219033f2ec4fc86197bccc
+
+LIVY_BINARY=https://www-us.apache.org/dist/incubator/livy/$LIVY_VERSION-incubating/livy-$LIVY_VERSION-incubating-bin.zip
+LIVY_MD5=cc9dc5518e8c178808707eaa68b7672a

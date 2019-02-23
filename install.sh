@@ -43,7 +43,13 @@ function extract_binary() {
         echo "File was extracted in $extract_dirname"
     else
         echo "Extracting to $extract_dirname"
-        tar -xvf $download_filename -C $APPLICATION_DIR
+        if [[ $download_filename =~ \.t?gz$ ]]; then
+            tar -xvf $download_filename -C $APPLICATION_DIR
+        elif [[ $download_filename =~ \.zip$ ]]; then
+            unzip $download_filename -d $APPLICATION_DIR
+        else
+            echo "Failed to extract because of unsupported filetype"
+        fi
     fi
     printf "\n"
 }
@@ -57,10 +63,11 @@ source $DIR/directory.info
 declare -a packages=(
     "$HADOOP_BINARY|$HADOOP_MD5"
     "$TEZ_BINARY|$TEZ_MD5"
+    "$ALLUXIO_BINARY|$ALLUXIO_MD5"
     "$DEBRY_BINARY|$DEBRY_MD5"
     "$HIVE_BINARY|$HIVE_MD5"
     "$SPARK_BINARY|$SPARK_MD5"
-    "$ALLUXIO_BINARY|$ALLUXIO_MD5"
+    "$LIVY_BINARY|$LIVY_MD5"
     "$ZOOKEEPER_BINARY|$ZOOKEEPER_MD5"
     "$HBASE_BINARY|$HBASE_MD5"
     "$PHOENIX_BINARY|$PHOENIX_MD5"

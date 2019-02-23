@@ -27,6 +27,11 @@ function stopHive() {
     rm $metastorePidFile
 }
 
+function stopLivy() {
+    echo "Stop Livy"
+    livy-server stop
+}
+
 function stopZooKeeper() {
     echo "Stop ZooKeeper"
     zkServer.sh stop
@@ -55,7 +60,8 @@ stopKafka
 stopPhoenix
 stopHBase
 stopZooKeeper
+stopLivy
 stopHive
-stopAlluxio
 stopDerby
+stopAlluxio
 stopHadoop
