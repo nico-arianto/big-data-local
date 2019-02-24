@@ -72,6 +72,7 @@ declare -a packages=(
     "$HBASE_BINARY|$HBASE_MD5"
     "$PHOENIX_BINARY|$PHOENIX_MD5"
     "$KAFKA_BINARY|$KAFKA_MD5"
+    "$PRESTO_BINARY|$PRESTO_MD5"
 )
 
 mkdir -p $DOWNLOAD_DIR
@@ -84,3 +85,5 @@ do
     download_binary $binary $binary_checksum
     extract_binary $binary
 done
+
+download_binary $PRESTO_CLI_BINARY $PRESTO_CLI_MD5

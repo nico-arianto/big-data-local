@@ -61,7 +61,7 @@ export YARN_CONF_DIR={{HADOOP_CONF_DIR}}
 # Generic options for the daemons used in the standalone deploy mode
 # - SPARK_CONF_DIR      Alternate conf dir. (Default: ${SPARK_HOME}/conf)
 # - SPARK_LOG_DIR       Where log files are stored.  (Default: ${SPARK_HOME}/logs)
-export SPARK_LOG_DIR={{HOME}}/Applications/var/log/spark
+export SPARK_LOG_DIR={{APPLICATION_LOG_DIR}}/spark
 # - SPARK_PID_DIR       Where the pid file is stored. (Default: /tmp)
 # - SPARK_IDENT_STRING  A string representing this instance of spark. (Default: $USER)
 # - SPARK_NICENESS      The scheduling priority for daemons. (Default: 0)

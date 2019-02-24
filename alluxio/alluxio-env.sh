@@ -24,7 +24,7 @@
 
 # The directory where log files are stored. (Default: ${ALLUXIO_HOME}/logs).
 # ALLUXIO_LOGS_DIR
-export ALLUXIO_LOGS_DIR={{HOME}}/Applications/var/log/alluxio
+export ALLUXIO_LOGS_DIR={{APPLICATION_LOG_DIR}}/alluxio
 
 # Config properties set for Alluxio master, worker and shell. (Default: "")
 # E.g. "-Dalluxio.master.port=39999"

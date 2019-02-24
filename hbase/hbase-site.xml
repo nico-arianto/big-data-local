@@ -31,6 +31,6 @@
   </property>
   <property>
     <name>hbase.zookeeper.property.dataDir</name>
-    <value>{{HOME}}/Applications/var/data/zookeeper</value>
+    <value>{{APPLICATION_DATA_DIR}}/zookeeper</value>
   </property>
 </configuration>

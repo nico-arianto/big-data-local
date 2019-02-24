@@ -8,6 +8,7 @@ Big Data Automation in Local MacOS
 * Alluxio worker: http://localhost:30000/
 * Livy: http://localhost:8998/ui
 * HBase HMaster: http://localhost:16010/
+* Presto: http://localhost:8080/ui/
 
 # How to setup
 Override the Big Data components configuration files
@@ -42,6 +43,7 @@ $ source ./environment.env
 * HBase: https://hbase.apache.org/book.html
 * Phoenix: https://phoenix.apache.org/
 * Kafka: http://kafka.apache.org/documentation/
+* Presto: https://prestodb.github.io/docs/current/index.html
 
 # Tested with
 * hadoop 2.7.7
@@ -55,3 +57,4 @@ $ source ./environment.env
 * hbase 1.4.9
 * phoenix 4.14.1
 * kafka 2.1.0
+* presto 0.217

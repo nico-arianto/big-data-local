@@ -52,10 +52,16 @@ function stopKafka() {
     kafka-server-stop.sh
 }
 
+function stopPresto() {
+    echo "Stop Presto"
+    launcher stop
+}
+
 DIR="${0%/*}"
 
 source $DIR/environment.env
 
+stopPresto
 stopKafka
 stopPhoenix
 stopHBase

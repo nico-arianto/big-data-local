@@ -34,7 +34,8 @@ function overrideConfiguration() {
     fi
     echo "Override the $targetFile"
     cp $sourceFile $targetFile
-    sed -i "" 's|{{HOME}}|'"$HOME"'|g' $targetFile
+    sed -i "" 's|{{APPLICATION_DATA_DIR}}|'"$APPLICATION_DATA_DIR"'|g' $targetFile
+    sed -i "" 's|{{APPLICATION_LOG_DIR}}|'"$APPLICATION_LOG_DIR"'|g' $targetFile
     sed -i "" 's|{{JAVA_HOME}}|'"$JAVA_HOME"'|g' $targetFile
     sed -i "" 's|{{HADOOP_HOME}}|'"$HADOOP_HOME"'|g' $targetFile
     sed -i "" 's|{{HADOOP_CONF_DIR}}|'"$HADOOP_CONF_DIR"'|g' $targetFile
@@ -48,85 +49,85 @@ function overrideConfiguration() {
     sed -i "" 's|{{PHOENIX_CLIENT_JAR}}|'"$PHOENIX_CLIENT_JAR"'|g' $targetFile
 }
 
+function copyConfiguration() {
+    local sourceDir="$DIR/$1"
+    local targetDir=$2
+    mkdir -p $targetDir
+    for config in $sourceDir/*; do
+        if [ -f $config ]; then
+            overrideConfiguration $(basename $config) $sourceDir $targetDir
+        fi
+    done
+}
+
 function configureHadoop() {
     echo "Configuring Hadoop"
-    local sourceDir="$DIR/hadoop"
-    for config in $sourceDir/*; do
-        overrideConfiguration $(basename $config) $sourceDir $HADOOP_CONF_DIR
-    done
+    copyConfiguration hadoop $HADOOP_CONF_DIR
     printf "\n"
 }
 
 function configureTez() {
     echo "Configuring Tez"
-    local sourceDir="$DIR/tez"
-    for config in $sourceDir/*; do
-        overrideConfiguration $(basename $config) $sourceDir $TEZ_CONF_DIR
-    done
+    copyConfiguration tez $TEZ_CONF_DIR
     printf "\n"
 }
 
 function configureHive() {
     echo "Configuring Hive"
-    local sourceDir="$DIR/hive"
-    for config in $sourceDir/*; do
-        overrideConfiguration $(basename $config) $sourceDir $HIVE_CONF_DIR
-    done
+    copyConfiguration hive $HIVE_CONF_DIR
     printf "\n"
 }
 
 function configureSpark() {
     echo "Configuring Spark"
     overrideConfiguration hive-site.xml $HIVE_CONF_DIR $SPARK_CONF_DIR
-    local sourceDir="$DIR/spark"
-    for config in $sourceDir/*; do
-        overrideConfiguration $(basename $config) $sourceDir $SPARK_CONF_DIR
-    done
+    copyConfiguration spark $SPARK_CONF_DIR
     printf "\n"
 }
 
 function configureLivy() {
     echo "Configuring Livy"
-    local sourceDir="$DIR/livy"
-    for config in $sourceDir/*; do
-        overrideConfiguration $(basename $config) $sourceDir $LIVY_HOME/conf
-    done
+    copyConfiguration livy $LIVY_HOME/conf
     printf "\n"
 }
 
 function configureAlluxio() {
     echo "Configuring Alluxio"
-    local sourceDir="$DIR/alluxio"
-    for config in $sourceDir/*; do
-        overrideConfiguration $(basename $config) $sourceDir $ALLUXIO_HOME/conf
-    done
+    copyConfiguration alluxio $ALLUXIO_HOME/conf
     printf "\n"
 }
 
 function configureZooKeeper() {
     echo "Configuring ZooKeeper"
-    local sourceDir="$DIR/zookeeper"
-    for config in $sourceDir/*; do
-        overrideConfiguration $(basename $config) $sourceDir $ZOOKEEPER_HOME/conf
-    done
+    copyConfiguration zookeeper $ZOOKEEPER_HOME/conf
     printf "\n"
 }
 
 function configureHBase() {
     echo "Configuring HBase"
-    local sourceDir="$DIR/hbase"
-    for config in $sourceDir/*; do
-        overrideConfiguration $(basename $config) $sourceDir $HBASE_CONF_DIR
-    done
+    copyConfiguration hbase $HBASE_CONF_DIR
     printf "\n"
 }
 
 function configureKafka() {
     echo "Configuring Kafka"
-    local sourceDir="$DIR/kafka"
-    for config in $sourceDir/*; do
-        overrideConfiguration $(basename $config) $sourceDir $KAFKA_HOME/config
-    done
+    copyConfiguration kafka $KAFKA_HOME/config
+    printf "\n"
+}
+
+function configurePresto() {
+    echo "Configuring Presto"
+    copyConfiguration presto $PRESTO_HOME/etc
+    copyConfiguration presto/catalog $PRESTO_HOME/etc/catalog
+    printf "\n"
+    local targetCLI=$PRESTO_HOME/bin/presto
+    if [ ! -e $targetCLI ]; then
+        echo "Configuring Presto CLI"
+        local sourceCLI=$DOWNLOAD_DIR/presto-cli-$PRESTO_VERSION-executable.jar 
+        cp $sourceCLI $targetCLI
+        echo "Copy the $sourceCLI to $targetCLI"
+        chmod +x $targetCLI
+    fi
     printf "\n"
 }
 
@@ -149,3 +150,4 @@ configureAlluxio
 configureZooKeeper
 configureHBase
 configureKafka
+configurePresto

@@ -13,6 +13,9 @@ HIVE_MD5=b61c46e08f0647d5217bbe43d9b01752
 SPARK_BINARY=https://www-us.apache.org/dist/spark/spark-$SPARK_VERSION/spark-$SPARK_VERSION-bin-hadoop$SPARK_HADOOP_VERSION.tgz
 SPARK_MD5=c1a230474c21335c983f45e84dcf8fb9
 
+LIVY_BINARY=https://www-us.apache.org/dist/incubator/livy/$LIVY_VERSION-incubating/livy-$LIVY_VERSION-incubating-bin.zip
+LIVY_MD5=cc9dc5518e8c178808707eaa68b7672a
+
 ALLUXIO_BINARY=http://downloads.alluxio.org/downloads/files/$ALLUXIO_VERSION/alluxio-$ALLUXIO_VERSION-bin.tar.gz
 ALLUXIO_MD5=86b3dce99c8eadcc7307d7afb70f5f93
 
@@ -28,5 +31,8 @@ PHOENIX_MD5=e0df079ad76cb2a1785b164e5f338d34
 KAFKA_BINARY=https://www-us.apache.org/dist/kafka/$KAFKA_VERSION/kafka_$KAFKA_SCALA_VERSION-$KAFKA_VERSION.tgz
 KAFKA_MD5=d3986e8b25219033f2ec4fc86197bccc
 
-LIVY_BINARY=https://www-us.apache.org/dist/incubator/livy/$LIVY_VERSION-incubating/livy-$LIVY_VERSION-incubating-bin.zip
-LIVY_MD5=cc9dc5518e8c178808707eaa68b7672a
+PRESTO_BINARY=https://repo1.maven.org/maven2/com/facebook/presto/presto-server/$PRESTO_VERSION/presto-server-$PRESTO_VERSION.tar.gz
+PRESTO_MD5=8cf3f776f849b6c03c69542b970e941b
+
+PRESTO_CLI_BINARY=https://repo1.maven.org/maven2/com/facebook/presto/presto-cli/$PRESTO_VERSION/presto-cli-$PRESTO_VERSION-executable.jar
+PRESTO_CLI_MD5=d904c312cf0a358a69825460ccb19e8a

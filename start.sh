@@ -86,6 +86,11 @@ function startKafka() {
     nohup kafka-server-start.sh -daemon $KAFKA_HOME/config/server.properties
 }
 
+function startPresto() {
+    echo "Start Presto"
+    launcher start --launcher-log-file $APPLICATION_LOG_DIR/presto/launcher.log --server-log-file $APPLICATION_LOG_DIR/presto/server.log
+}
+
 DIR="${0%/*}"
 
 source $DIR/environment.env
@@ -99,3 +104,4 @@ startZooKeeper
 startHBase
 startPhoenix
 startKafka
+startPresto
