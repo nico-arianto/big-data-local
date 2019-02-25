@@ -23,11 +23,15 @@
 <configuration>
   <property>
     <name>hbase.rootdir</name>
-    <value>hdfs://localhost:9000/hbase</value>
+    <value>alluxio://localhost:19998/hbase</value>
   </property>
   <property>
     <name>hbase.cluster.distributed</name>
     <value>true</value>
+  </property>
+  <property>
+    <name>hbase.regionserver.hlog.syncer.count</name>
+    <value>1</value>
   </property>
   <property>
     <name>hbase.zookeeper.property.dataDir</name>
