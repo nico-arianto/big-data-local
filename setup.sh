@@ -127,22 +127,37 @@ function configurePresto() {
         cp $sourceCLI $targetCLI
         echo "Copy the $sourceCLI to $targetCLI"
         chmod +x $targetCLI
+        printf "\n"
     fi
-    printf "\n"
 }
 
-function replaceHBaseHadoopLib() {
+function replaceHadoopLib() {
     local hadoopLib=$1
-    local libBackupDir=$2
-    local hadoopLibName=$3
-    local libDir=$4
+    local libDir=$2
+    local libBackupDir=$3
+    if [ -e $hadoopLib ]; then
+        if [ "$libBackupDir" != "" ]; then
+            echo "Backup the $hadoopLib to $libBackupDir"
+            mv $hadoopLib $libBackupDir
+        else
+            echo "Remove the $hadoopLib"
+            rm $hadoopLib
+        fi
+    fi
+    local hadoopLibName=$(basename $hadoopLib | sed 's/[0-9]/\[0-9\]/g')
     local newHadoopLib=$(find $HADOOP_HOME -name "$hadoopLibName" | head -n 1)
-    echo "Backup the $hadoopLib to $libBackupDir"
-    mv $hadoopLib $libBackupDir
     if [ "$newHadoopLib" != "" ]; then
         echo "Replace with $newHadoopLib"
         cp $newHadoopLib $libDir
     fi
+}
+
+function replaceHadoopLibraries() {
+    local libDir=$1
+    local libBackupDir=$2
+    for hadoopLib in $(find $libDir -name "hadoop-*.jar"); do
+        replaceHadoopLib $hadoopLib $libDir $libBackupDir
+    done
 }
 
 function replaceHBaseHadoop() {
@@ -150,10 +165,37 @@ function replaceHBaseHadoop() {
     local libBackupDir=$HBASE_HOME/lib/hadoop-backup
     if [ ! -d $libBackupDir ]; then
         mkdir -p $libBackupDir
-        for hadoopLib in $(find $libDir -name "hadoop-*.jar"); do
-            local hadoopLibName=$(basename $hadoopLib | sed 's/[0-9]/\[0-9\]/g')
-            replaceHBaseHadoopLib $hadoopLib $libBackupDir $hadoopLibName $libDir
-        done
+        replaceHadoopLibraries $libDir $libBackupDir
+    fi
+    printf "\n"
+}
+
+function replaceTezHadoop() {
+    local libDir=$TEZ_JARS/lib
+    local libBackupDir=$TEZ_JARS/lib/hadoop-backup
+    if [ ! -d $libBackupDir ]; then
+        mkdir -p $libBackupDir
+        replaceHadoopLibraries $libDir $libBackupDir
+        printf "\n"
+    fi
+    local binFilename=tez.tar.gz
+    local binPath=$TEZ_JARS/share
+    local binFile=$binPath/$binFilename
+    local binBackupFile=$binPath/$binFilename.backup
+    if [ ! -e $binBackupFile ]; then
+        local binDir=$binPath/tez
+        local binLibDir=$binDir/lib
+        echo "Backup the $binFile to $binBackupFile"
+        mv $binFile $binBackupFile
+        mkdir -p $binDir
+        echo "Extract the $binBackupFile to $binDir"
+        tar -zxvf $binBackupFile -C $binDir
+        replaceHadoopLibraries $binLibDir
+        replaceHadoopLib "jetty-sslengine-*.jar" $binLibDir
+        echo "Create the $binFile"
+        cd $binDir && tar -zcvf $binFilename * && mv $binFilename $binPath && cd -
+        rm -rf $binDir
+        printf "\n"
     fi
 }
 
@@ -178,3 +220,4 @@ configureHBase
 configureKafka
 configurePresto
 replaceHBaseHadoop
+replaceTezHadoop
