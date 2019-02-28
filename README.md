@@ -50,7 +50,7 @@ $ source ./environment.env
 * tez 0.9.1
 * alluxio 1.8.1
 * derby 10.14.2.0
-* hive 3.1.1
+* hive 2.3.3
 * spark 2.4.0
 * livy 0.5.0
 * zookeeper 3.4.13

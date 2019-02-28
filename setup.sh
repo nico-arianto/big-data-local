@@ -119,6 +119,12 @@ function configurePresto() {
     echo "Configuring Presto"
     copyConfiguration presto $PRESTO_HOME/etc
     copyConfiguration presto/catalog $PRESTO_HOME/etc/catalog
+    local prestoHiveDir=$PRESTO_HOME/plugin/hive-hadoop2
+    local alluxioClientJar=$(basename $ALLUXIO_CLIENT_JAR)
+    if [ ! -e $prestoHiveDir/$alluxioClientJar ]; then
+        echo "Copying $ALLUXIO_CLIENT_JAR to $prestoHiveDir"
+        cp $ALLUXIO_CLIENT_JAR $prestoHiveDir/
+    fi
     printf "\n"
     local targetCLI=$PRESTO_HOME/bin/presto
     if [ ! -e $targetCLI ]; then
