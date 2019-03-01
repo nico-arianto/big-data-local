@@ -47,6 +47,7 @@ function overrideConfiguration() {
     sed -i "" 's|{{ALLUXIO_CLIENT_JAR}}|'"$ALLUXIO_CLIENT_JAR"'|g' $targetFile
     sed -i "" 's|{{PHOENIX_SERVER_JAR}}|'"$PHOENIX_SERVER_JAR"'|g' $targetFile
     sed -i "" 's|{{PHOENIX_CLIENT_JAR}}|'"$PHOENIX_CLIENT_JAR"'|g' $targetFile
+    sed -i "" 's|{{SPARK_YARN_SHUFFLE_JAR}}|'"$SPARK_YARN_SHUFFLE_JAR"'|g' $targetFile
 }
 
 function copyConfiguration() {
@@ -212,6 +213,7 @@ source $DIR/environment.env
 ALLUXIO_CLIENT_JAR=$ALLUXIO_HOME/client/alluxio-$ALLUXIO_VERSION-client.jar
 PHOENIX_SERVER_JAR=$PHOENIX_HOME/phoenix-$PHOENIX_VERSION-HBase-$PHOENIX_HBASE_VERSION-server.jar
 PHOENIX_CLIENT_JAR=$PHOENIX_HOME/phoenix-$PHOENIX_VERSION-HBase-$PHOENIX_HBASE_VERSION-client.jar
+SPARK_YARN_SHUFFLE_JAR=$SPARK_HOME/yarn/spark-2.4.0-yarn-shuffle.jar
 
 enableRemoteLogin
 setupPassphraselessSSH
