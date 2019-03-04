@@ -24,16 +24,21 @@ function startAlluxio() {
     alluxio-start.sh local SudoMount
 }
 
-function startDerby() {
-    echo "Start the Derby Network Server"
-    local systemHome=$HOME/Applications/var/data/derby
-    local logDir=$HOME/Applications/var/log/derby
-    mkdir -p $systemHome
-    mkdir -p $logDir
-    source setNetworkServerCP
-    java -Dderby.system.home=$systemHome \
-        org.apache.derby.drda.NetworkServerControl start \
-        >$logDir/derby.out 2>$logDir/derby.err &
+function startPostgresql() {
+    echo "Start the PostgreSQL Database Server"
+    local dataDir=$APPLICATION_DATA_DIR/postgresql
+    local logDir=$APPLICATION_LOG_DIR/postgresql
+    if [ ! -d $dataDir ]; then
+        pg_ctl init -D $dataDir
+        mkdir -p $logDir
+    fi
+    pg_ctl start -D $dataDir -l $logDir/serverlog
+    if ! psql -lqt | cut -d \| -f 1 | grep -qw hive; then
+        echo "Create user - hive"
+        createuser -d hive
+        echo "Create database - hive"
+        createdb -U hive hive
+    fi
 }
 
 function startHive() {
@@ -43,10 +48,10 @@ function startHive() {
     hadoop fs -chmod g+w /tmp
     hadoop fs -chmod g+w /user/hive/warehouse
     echo "Try Schema upgrade"
-    schematool -dbType derby -upgradeSchema
+    schematool -dbType postgres -upgradeSchema
     if [ ! "$?" = "0" ]; then
         echo "Try Schema initialization"
-        schematool -dbType derby -initSchema
+        schematool -dbType postgres -initSchema
     fi
     echo "Start Metastore Server"
     local metastoreLogDir=$HOME/Applications/var/log/hive/metastore
@@ -97,7 +102,7 @@ source $DIR/environment.env
 
 startHadoop
 startAlluxio
-startDerby
+startPostgresql
 startHive
 startLivy
 startZooKeeper

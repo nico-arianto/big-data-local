@@ -5,10 +5,9 @@ function stopHadoop() {
     $HADOOP_HOME/sbin/stop-dfs.sh
 }
 
-function stopDerby() {
-    echo "Stop the Derby Network Server"
-    source setNetworkServerCP
-    java org.apache.derby.drda.NetworkServerControl shutdown
+function stopPostgresql() {
+    echo "Stop the PostgreSQL Database Server"
+    pg_ctl stop -D $APPLICATION_DATA_DIR/postgresql
 }
 
 function stopAlluxio() {
@@ -68,6 +67,6 @@ stopHBase
 stopZooKeeper
 stopLivy
 stopHive
-stopDerby
+stopPostgresql
 stopAlluxio
 stopHadoop

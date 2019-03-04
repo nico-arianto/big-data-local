@@ -35,7 +35,7 @@ $ source ./environment.env
 * Hadoop: https://hadoop.apache.org/docs/r2.7.7/
 * Tez: https://cwiki.apache.org/confluence/display/TEZ/
 * Alluxio: https://www.alluxio.org/docs/1.8/en/
-* Derby: https://db.apache.org/derby/docs/10.14/
+* PostgreSQL: https://www.postgresql.org/docs/manuals/
 * Hive: https://cwiki.apache.org/confluence/display/Hive/
 * Spark: http://spark.apache.org/docs/latest/
 * Livy: https://livy.incubator.apache.org/get-started/
@@ -49,7 +49,7 @@ $ source ./environment.env
 * hadoop 2.7.7
 * tez 0.9.1
 * alluxio 1.8.1
-* derby 10.14.2.0
+* postgresql 11.2-1
 * hive 2.3.3
 * spark 2.4.0
 * livy 0.5.0
