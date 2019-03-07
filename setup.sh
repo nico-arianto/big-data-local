@@ -110,6 +110,18 @@ function configureHBase() {
     printf "\n"
 }
 
+function configurePhoenix() {
+    echo "Configuring Phoenix"
+    local backupFile=$PHOENIX_CLIENT_JAR.backup
+    if [ ! -e $backupFile ]; then
+        echo "Backup the $PHOENIX_CLIENT_JAR to $backupFile"
+        cp $PHOENIX_CLIENT_JAR $backupFile
+        echo "Delete the javax directory from $PHOENIX_CLIENT_JAR"
+        zip -d $PHOENIX_CLIENT_JAR javax/\*\*
+    fi
+    printf "\n"
+}
+
 function configureKafka() {
     echo "Configuring Kafka"
     copyConfiguration kafka $KAFKA_HOME/config
@@ -225,6 +237,7 @@ configureLivy
 configureAlluxio
 configureZooKeeper
 configureHBase
+configurePhoenix
 configureKafka
 configurePresto
 replaceHBaseHadoop
