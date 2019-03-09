@@ -63,50 +63,50 @@ function copyConfiguration() {
 
 function configureHadoop() {
     echo "Configuring Hadoop"
-    copyConfiguration hadoop $HADOOP_CONF_DIR
+    copyConfiguration hadoop/etc/hadoop $HADOOP_CONF_DIR
     printf "\n"
 }
 
 function configureTez() {
     echo "Configuring Tez"
-    copyConfiguration tez $TEZ_CONF_DIR
+    copyConfiguration tez/conf $TEZ_CONF_DIR
     printf "\n"
 }
 
 function configureHive() {
     echo "Configuring Hive"
-    copyConfiguration hive $HIVE_CONF_DIR
+    copyConfiguration hive/conf $HIVE_CONF_DIR
     printf "\n"
 }
 
 function configureSpark() {
     echo "Configuring Spark"
     overrideConfiguration hive-site.xml $HIVE_CONF_DIR $SPARK_CONF_DIR
-    copyConfiguration spark $SPARK_CONF_DIR
+    copyConfiguration spark/conf $SPARK_CONF_DIR
     printf "\n"
 }
 
 function configureLivy() {
     echo "Configuring Livy"
-    copyConfiguration livy $LIVY_HOME/conf
+    copyConfiguration livy/conf $LIVY_HOME/conf
     printf "\n"
 }
 
 function configureAlluxio() {
     echo "Configuring Alluxio"
-    copyConfiguration alluxio $ALLUXIO_HOME/conf
+    copyConfiguration alluxio/conf $ALLUXIO_HOME/conf
     printf "\n"
 }
 
 function configureZooKeeper() {
     echo "Configuring ZooKeeper"
-    copyConfiguration zookeeper $ZOOKEEPER_HOME/conf
+    copyConfiguration zookeeper/conf $ZOOKEEPER_HOME/conf
     printf "\n"
 }
 
 function configureHBase() {
     echo "Configuring HBase"
-    copyConfiguration hbase $HBASE_CONF_DIR
+    copyConfiguration hbase/conf $HBASE_CONF_DIR
     printf "\n"
 }
 
@@ -124,14 +124,14 @@ function configurePhoenix() {
 
 function configureKafka() {
     echo "Configuring Kafka"
-    copyConfiguration kafka $KAFKA_HOME/config
+    copyConfiguration kafka/config $KAFKA_HOME/config
     printf "\n"
 }
 
 function configurePresto() {
     echo "Configuring Presto"
-    copyConfiguration presto $PRESTO_HOME/etc
-    copyConfiguration presto/catalog $PRESTO_HOME/etc/catalog
+    copyConfiguration presto/etc $PRESTO_HOME/etc
+    copyConfiguration presto/etc/catalog $PRESTO_HOME/etc/catalog
     local prestoHiveDir=$PRESTO_HOME/plugin/hive-hadoop2
     local alluxioClientJar=$(basename $ALLUXIO_CLIENT_JAR)
     if [ ! -e $prestoHiveDir/$alluxioClientJar ]; then
@@ -148,6 +148,13 @@ function configurePresto() {
         chmod +x $targetCLI
         printf "\n"
     fi
+}
+
+function configureCassandra() {
+    echo "Configuring Cassandra"
+    copyConfiguration cassandra/bin $CASSANDRA_HOME/bin
+    copyConfiguration cassandra/conf $CASSANDRA_HOME/conf
+    printf "\n"
 }
 
 function replaceHadoopLib() {
@@ -240,5 +247,6 @@ configureHBase
 configurePhoenix
 configureKafka
 configurePresto
+configureCassandra
 replaceHBaseHadoop
 replaceTezHadoop

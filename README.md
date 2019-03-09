@@ -1,6 +1,10 @@
 # Big Data in Local
 Big Data Automation in Local MacOS
 
+# Prerequisites
+* Java 8
+* Python 2.7 / 3
+
 # Web UI
 * NameNode: http://localhost:50070/
 * ResourceManager: http://localhost:8088/
@@ -44,6 +48,7 @@ $ source ./environment.env
 * Phoenix: https://phoenix.apache.org/
 * Kafka: http://kafka.apache.org/documentation/
 * Presto: https://prestodb.github.io/docs/current/index.html
+* Cassandra: https://cassandra.apache.org/doc/latest/
 
 # Tested with
 * hadoop 2.7.7
@@ -58,3 +63,4 @@ $ source ./environment.env
 * phoenix 4.14.1
 * kafka 2.1.0
 * presto 0.217
+* cassandra 3.11.4

@@ -36,3 +36,6 @@ PRESTO_MD5=8cf3f776f849b6c03c69542b970e941b
 
 PRESTO_CLI_BINARY=https://repo1.maven.org/maven2/com/facebook/presto/presto-cli/$PRESTO_VERSION/presto-cli-$PRESTO_VERSION-executable.jar
 PRESTO_CLI_MD5=d904c312cf0a358a69825460ccb19e8a
+
+CASSANDRA_BINARY=https://www-us.apache.org/dist/cassandra/$CASSANDRA_VERSION/apache-cassandra-$CASSANDRA_VERSION-bin.tar.gz
+CASSANDRA_MD5=800e522556e86400f4cf754953df626c

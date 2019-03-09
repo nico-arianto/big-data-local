@@ -96,6 +96,12 @@ function startPresto() {
     launcher start --launcher-log-file $APPLICATION_LOG_DIR/presto/launcher.log --server-log-file $APPLICATION_LOG_DIR/presto/server.log
 }
 
+function startCassandra() {
+    echo "Start Cassandra"
+    mkdir -p $APPLICATION_LOG_DIR/cassandra
+    cassandra -p /tmp/cassandra.pid -E $APPLICATION_LOG_DIR/errorfile
+}
+
 DIR="${0%/*}"
 
 source $DIR/environment.env
@@ -110,3 +116,4 @@ startHBase
 startPhoenix
 startKafka
 startPresto
+startCassandra

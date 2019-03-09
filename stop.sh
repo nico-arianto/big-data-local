@@ -56,10 +56,16 @@ function stopPresto() {
     launcher stop
 }
 
+function stopCassandra() {
+    echo "Stop Cassandra"
+    stop-server
+}
+
 DIR="${0%/*}"
 
 source $DIR/environment.env
 
+stopCassandra
 stopPresto
 stopKafka
 stopPhoenix
