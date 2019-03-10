@@ -14,6 +14,11 @@ Big Data Automation in Local MacOS
 * HBase HMaster: http://localhost:16010/
 * Presto: http://localhost:8080/ui/
 
+# How to install
+```shell
+$ ./install.sh
+```
+
 # How to setup
 Override the Big Data components configuration files
 ```shell
