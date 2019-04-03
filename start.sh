@@ -115,5 +115,5 @@ startZooKeeper
 startHBase
 startPhoenix
 startKafka
-startPresto
 startCassandra
+startPresto

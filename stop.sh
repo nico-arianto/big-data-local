@@ -65,8 +65,8 @@ DIR="${0%/*}"
 
 source $DIR/environment.env
 
-stopCassandra
 stopPresto
+stopCassandra
 stopKafka
 stopPhoenix
 stopHBase
