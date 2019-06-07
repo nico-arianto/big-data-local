@@ -61,7 +61,7 @@ $ source ./environment.env
 * alluxio 1.8.1
 * postgresql 11.2-1
 * hive 2.3.3
-* spark 2.4.0
+* spark 2.4.3
 * livy 0.5.0
 * zookeeper 3.4.13
 * hbase 1.4.9

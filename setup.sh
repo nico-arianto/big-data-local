@@ -117,7 +117,7 @@ function configurePhoenix() {
         echo "Backup the $PHOENIX_CLIENT_JAR to $backupFile"
         cp $PHOENIX_CLIENT_JAR $backupFile
         echo "Delete the javax directory from $PHOENIX_CLIENT_JAR"
-        zip -d $PHOENIX_CLIENT_JAR javax/\*\*
+        zip -d $PHOENIX_CLIENT_JAR javax/\* META-INF/services/javax.\*
     fi
     printf "\n"
 }
@@ -232,7 +232,7 @@ source $DIR/environment.env
 ALLUXIO_CLIENT_JAR=$ALLUXIO_HOME/client/alluxio-$ALLUXIO_VERSION-client.jar
 PHOENIX_SERVER_JAR=$PHOENIX_HOME/phoenix-$PHOENIX_VERSION-HBase-$PHOENIX_HBASE_VERSION-server.jar
 PHOENIX_CLIENT_JAR=$PHOENIX_HOME/phoenix-$PHOENIX_VERSION-HBase-$PHOENIX_HBASE_VERSION-client.jar
-SPARK_YARN_SHUFFLE_JAR=$SPARK_HOME/yarn/spark-2.4.0-yarn-shuffle.jar
+SPARK_YARN_SHUFFLE_JAR=$SPARK_HOME/yarn/spark-$SPARK_VERSION-yarn-shuffle.jar
 
 enableRemoteLogin
 setupPassphraselessSSH
