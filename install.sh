@@ -1,23 +1,19 @@
 #!/usr/bin/env sh
 
-function get_filename() {
-    echo "${1##*/}"
-}
-
 function get_downloaded_filename() {
-    filename=$(get_filename $1)
+    filename=$(basename $1)
     echo $DOWNLOAD_DIR/$filename
 }
 
 function download_binary() {
-    echo "Trying to download $1"
     download_filename=$(get_downloaded_filename $1)
+    echo "Trying to download $1 to $download_filename"
     local file_exist=$([[ -e $download_filename ]] && echo 'true' || echo 'false')
     if [ "$file_exist" == "true" ]; then
         echo "File was downloaded in $download_filename"
-        file_md5=$(md5 -q $download_filename)
-        if [ "$file_md5" != "$2" ]; then
-            echo "MD5 checksum for $download_filename was invalid"
+        file_SHA=$(shasum -a 512 -b $download_filename | cut -d' ' -f1)
+        if [ "$file_SHA" != "$2" ]; then
+            echo "SHA checksum for $download_filename was invalid"
             rm $download_filename
             file_exist='false'
         fi
@@ -29,62 +25,61 @@ function download_binary() {
     printf "\n"
 }
 
-function get_foldername() {
-    echo "${1%%/*}"
-}
-
 function extract_binary() {
-    echo "Trying to extract $1"
     download_filename=$(get_downloaded_filename $1)
-    head_item=$(tar -tf $download_filename | head -n 1)
-    extract_foldername=$(get_foldername $head_item)
-    extract_dirname=$APPLICATION_DIR/$extract_foldername
-    if [ -d $extract_dirname ]; then
-        echo "File was extracted in $extract_dirname"
+    echo "Trying to extract $download_filename to $2"
+    if [ -d $2 ]; then
+        echo "File was extracted in $2"
     else
-        echo "Extracting to $extract_dirname"
-        if [[ $download_filename =~ \.t?gz$ ]]; then
-            tar -xvf $download_filename -C $APPLICATION_DIR
-        elif [[ $download_filename =~ \.zip$ ]]; then
-            unzip $download_filename -d $APPLICATION_DIR
-        else
-            echo "Failed to extract because of unsupported filetype"
-        fi
+        echo "Extracting to $2"
+        mkdir -p $2
+        tar -xvf $download_filename -C $2 --strip-components=1
     fi
     printf "\n"
 }
 
 DIR="${0%/*}"
 
-source $DIR/version.info
-source $DIR/binary.info
-source $DIR/directory.info
+source $DIR/binary.env
+source $DIR/environment.env
 
-declare -a packages=(
-    "$HADOOP_BINARY|$HADOOP_MD5"
-    "$TEZ_BINARY|$TEZ_MD5"
-    "$ALLUXIO_BINARY|$ALLUXIO_MD5"
-    "$POSTGRESQL_BINARY|$POSTGRESQL_MD5"
-    "$HIVE_BINARY|$HIVE_MD5"
-    "$SPARK_BINARY|$SPARK_MD5"
-    "$LIVY_BINARY|$LIVY_MD5"
-    "$ZOOKEEPER_BINARY|$ZOOKEEPER_MD5"
-    "$HBASE_BINARY|$HBASE_MD5"
-    "$PHOENIX_BINARY|$PHOENIX_MD5"
-    "$KAFKA_BINARY|$KAFKA_MD5"
-    "$PRESTO_BINARY|$PRESTO_MD5"
-    "$CASSANDRA_BINARY|$CASSANDRA_MD5"
-)
+set -e
 
 mkdir -p $DOWNLOAD_DIR
 mkdir -p $APPLICATION_DIR
 
-for package in "${packages[@]}"
+declare -a services=(
+    "$POSTGRESQL_URL|$POSTGRESQL_SHA|$POSTGRESQL_HOME"
+    "$ZOOKEEPER_URL|$ZOOKEEPER_SHA|$ZOOKEEPER_HOME"
+    "$HADOOP_URL|$HADOOP_SHA|$HADOOP_HOME"
+    "$TEZ_URL|$TEZ_SHA|$TEZ_HOME"
+    "$HIVE_URL|$HIVE_SHA|$HIVE_HOME"
+    "$HBASE_URL|$HBASE_SHA|$HBASE_HOME"
+    "$PHOENIX_URL|$PHOENIX_SHA|$PHOENIX_HOME"
+    "$SPARK_URL|$SPARK_SHA|$SPARK_HOME"
+    "$LIVY_URL|$LIVY_SHA|$LIVY_HOME"
+    "$ALLUXIO_URL|$ALLUXIO_SHA|$ALLUXIO_HOME"
+    "$KAFKA_URL|$KAFKA_SHA|$KAFKA_HOME"
+    "$CASSANDRA_URL|$CASSANDRA_SHA|$CASSANDRA_HOME"
+    "$PRESTO_URL|$PRESTO_SHA|$PRESTO_HOME"
+)
+
+for service in "${services[@]}"
 do
-    binary="${package%%|*}"
-    binary_checksum="${package##*|}"
-    download_binary $binary $binary_checksum
-    extract_binary $binary
+    binary="$(cut -d'|' -f1 <<<"$service")"
+    binary_sha="$(cut -d'|' -f2 <<<"$service")"
+    binary_extract_dir="$(cut -d'|' -f3 <<<"$service")"
+    download_binary $binary $binary_sha
+    extract_binary $binary $binary_extract_dir
 done
 
-download_binary $PRESTO_CLI_BINARY $PRESTO_CLI_MD5
+declare -a clients=(
+    "$PRESTO_CLI_URL|$PRESTO_CLI_SHA"
+)
+
+for client in "${clients[@]}"
+do
+    binary="$(cut -d'|' -f1 <<<"$service")"
+    binary_sha="$(cut -d'|' -f2 <<<"$service")"
+    download_binary $binary $binary_sha
+done
