@@ -41,7 +41,7 @@ for f in $HADOOP_HOME/contrib/capacity-scheduler/*.jar; do
   fi
 done
 
-export HADOOP_CLASSPATH="{{TEZ_CONF_DIR}}:{{TEZ_JARS}}/*:{{TEZ_JARS}}/lib/*:{{ALLUXIO_CLIENT_JAR}}:{{SPARK_YARN_SHUFFLE_JAR}}:${HADOOP_CLASSPATH}"
+export HADOOP_CLASSPATH="{{TEZ_CONF_DIR}}:{{TEZ_HOME}}/*:{{TEZ_HOME}}/lib/*:{{ALLUXIO_CLIENT_JAR}}:{{SPARK_YARN_SHUFFLE_JAR}}:${HADOOP_CLASSPATH}"
 
 # The maximum amount of heap to use, in MB. Default is 1000.
 #export HADOOP_HEAPSIZE=

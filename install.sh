@@ -79,7 +79,7 @@ declare -a clients=(
 
 for client in "${clients[@]}"
 do
-    binary="$(cut -d'|' -f1 <<<"$service")"
-    binary_sha="$(cut -d'|' -f2 <<<"$service")"
+    binary="$(cut -d'|' -f1 <<<"$client")"
+    binary_sha="$(cut -d'|' -f2 <<<"$client")"
     download_binary $binary $binary_sha
 done

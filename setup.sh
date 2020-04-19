@@ -41,7 +41,7 @@ function overrideConfiguration() {
     sed -i "" 's|{{HADOOP_CONF_DIR}}|'"$HADOOP_CONF_DIR"'|g' $targetFile
     sed -i "" 's|{{TEZ_VERSION}}|'"$TEZ_VERSION"'|g' $targetFile
     sed -i "" 's|{{TEZ_CONF_DIR}}|'"$TEZ_CONF_DIR"'|g' $targetFile
-    sed -i "" 's|{{TEZ_JARS}}|'"$TEZ_JARS"'|g' $targetFile
+    sed -i "" 's|{{TEZ_HOME}}|'"$TEZ_HOME"'|g' $targetFile
     sed -i "" 's|{{HIVE_HOME}}|'"$HIVE_HOME"'|g' $targetFile
     sed -i "" 's|{{HIVE_VERSION}}|'"$HIVE_VERSION"'|g' $targetFile
     sed -i "" 's|{{ALLUXIO_CLIENT_JAR}}|'"$ALLUXIO_CLIENT_JAR"'|g' $targetFile
@@ -197,15 +197,15 @@ function replaceHBaseHadoop() {
 }
 
 function replaceTezHadoop() {
-    local libDir=$TEZ_JARS/lib
-    local libBackupDir=$TEZ_JARS/lib/hadoop-backup
+    local libDir=$TEZ_HOME/lib
+    local libBackupDir=$TEZ_HOME/lib/hadoop-backup
     if [ ! -d $libBackupDir ]; then
         mkdir -p $libBackupDir
         replaceHadoopLibraries $libDir $libBackupDir
         printf "\n"
     fi
     local binFilename=tez.tar.gz
-    local binPath=$TEZ_JARS/share
+    local binPath=$TEZ_HOME/share
     local binFile=$binPath/$binFilename
     local binBackupFile=$binPath/$binFilename.backup
     if [ ! -e $binBackupFile ]; then
